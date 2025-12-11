@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<style>
+  #board {
+    width: 400px;
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(20, 20px);
+    grid-template-rows: repeat(20, 20px);
+    border: 2px solid #333;
+    margin-top: 20px;
+    position: relative;
+    background-color: #eee;
+  }
+  .food {
+    width: 20px;
+    height: 20px;
+    background-color: yellow;
+    position: absolute;
+  }
+  .snake-segment {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    position: absolute;
+  }
+</style>
+
+<h1>Snake w kratkach 🐍🍎</h1>
+<div id="board"></div>
+
+<script>
+const board = document.getElementById("board");
+
+const CELL_SIZE = 20; // rozmiar kratki
+const GRID_COUNT = 20;
+const FOOD_COUNT = 10;
+
+// wąż
+let snake = [{x: 10, y: 10}]; // pozycja w kratkach
+let direction = "right";
+let nextDirection = "right";
+
+// jedzenie
+let foods = [];
+
+// generowanie jedzenia
+function spawnFood() {
+  while (foods.length < FOOD_COUNT) {
+    const fx = Math.floor(Math.random() * GRID_COUNT);
+    const fy = Math.floor(Math.random() * GRID_COUNT);
+    if (!snake.some(seg => seg.x === fx && seg.y === fy) &&
+        !foods.some(f => f.x === fx && f.y === fy)) {
+      foods.push({x: fx, y: fy});
+    }
+  }
+}
+
+// sterowanie - zapisujemy kierunek, ale zmiana nastąpi w kolejnej kratce
+document.addEventListener("keydown", (e) => {
+  switch (e.key.toLowerCase()) {
+    case "w": if (direction !== "down") nextDirection = "up"; break;
+    case "s": if (direction !== "up") nextDirection = "down"; break;
+    case "a": if (direction !== "right") nextDirection = "left"; break;
+    case "d": if (direction !== "left") nextDirection = "right"; break;
+  }
+});
+
+// rysowanie węża i jedzenia
+function draw() {
+  board.innerHTML = "";
+
+  // szachownica
+  for (let y = 0; y < GRID_COUNT; y++) {
+    for (let x = 0; x < GRID_COUNT; x++) {
+      const cell = document.createElement("div");
+      cell.style.width = CELL_SIZE + "px";
+      cell.style.height = CELL_SIZE + "px";
+      cell.style.position = "absolute";
+      cell.style.left = x * CELL_SIZE + "px";
+      cell.style.top = y * CELL_SIZE + "px";
+      cell.style.backgroundColor = (x + y) % 2 === 0 ? "#a8d5ba" : "#81c784";
+      board.appendChild(cell);
+    }
+  }
+
+  // jedzenie
+  foods.forEach(f => {
+    const fDiv = document.createElement("div");
+    fDiv.className = "food";
+    fDiv.style.left = f.x * CELL_SIZE + "px";
+    fDiv.style.top = f.y * CELL_SIZE + "px";
+    board.appendChild(fDiv);
+  });
+
+  // wąż
+  snake.forEach(seg => {
+    const sDiv = document.createElement("div");
+    sDiv.className = "snake-segment";
+    sDiv.style.left = seg.x * CELL_SIZE + "px";
+    sDiv.style.top = seg.y * CELL_SIZE + "px";
+    board.appendChild(sDiv);
+  });
+}
+
+// ruch węża po kratkach
+function move() {
+  direction = nextDirection; // zmiana kierunku dopiero przy nowym kroku
+
+  const head = {...snake[0]};
+
+  if (direction === "up") head.y -= 1;
+  if (direction === "down") head.y += 1;
+  if (direction === "left") head.x -= 1;
+  if (direction === "right") head.x += 1;
+
+  // kolizja ze ścianą
+  if (head.x < 0 || head.x >= GRID_COUNT || head.y < 0 || head.y >= GRID_COUNT) {
+    alert("Game Over! Uderzyłeś w ścianę.");
+    window.location.reload();
+  }
+
+  // kolizja z samym sobą
+  const segmentsToCheck = snake.slice(0, -1);
+  if (segmentsToCheck.some(seg => seg.x === head.x && seg.y === head.y)) {
+    alert("Game Over! Uderzyłeś w siebie.");
+    window.location.reload();
+  }
+
+  snake.unshift(head);
+
+  // jedzenie
+  const eatenIndex = foods.findIndex(f => f.x === head.x && f.y === head.y);
+  if (eatenIndex >= 0) {
+    foods.splice(eatenIndex, 1);
+    spawnFood();
+  } else {
+    snake.pop();
+  }
+
+  draw();
+}
+
+// start
+spawnFood();
+draw();
+setInterval(move, 200); // wolniejszy, ale krok po kratce
+</script>
+
+</body>
+</html>
