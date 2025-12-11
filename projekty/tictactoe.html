@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon_tvs.png" type="image/x-icon">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <section>
+            <img src="tic.gif" alt="Tic Tac Toe" style="height: 80px;">
+        </section>
+        <div id="scoreboard" style="text-align:center; margin-bottom: 10px;">
+            <span id="score-x" style="color:red; font-weight:bold;">X: 0</span>
+            &nbsp;|&nbsp;
+            <span id="score-o" style="color:blue; font-weight:bold;">O: 0</span>
+        </div>
+        
+    </header>
+    <main>
+        
+         <div id="game"></div>
+            <div id="status"></div>
+            <div>
+                <button id="reset" onclick="resetGame()">Reset</button>
+            </div>  
+        <script>
+            let scoreX = 0;
+            let scoreO = 0;
+
+            function updateScoreboard() {
+                document.getElementById('score-x').textContent = `X: ${scoreX}`;
+                document.getElementById('score-o').textContent = `O: ${scoreO}`;
+            }
+            const game = document.getElementById('game');
+            const status = document.getElementById('status');
+            let board = Array(9).fill('');
+            let current = 'X';
+            let gameOver = false;
+
+            function createBoard() {
+                game.innerHTML = '';
+                for (let i = 0; i < 9; i++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.dataset.index = i;
+                    cell.addEventListener('click', () => makeMove(i, cell));
+                    cell.addEventListener('mouseenter', () => {
+                        if (!board[i] && !gameOver) {
+                            cell.innerHTML = `<span class="preview ${current === 'X' ? 'x' : 'o'}">${current}</span>`;
+                        }
+                    });
+                    cell.addEventListener('mouseleave', () => {
+                        if (!board[i] && !gameOver) {
+                            cell.innerHTML = '';
+                        }
+                    });
+
+                    game.appendChild(cell);
+                }
+            }
+
+            function makeMove(i, cell) {
+                if (board[i] || gameOver) return;
+
+                board[i] = current;
+                cell.innerHTML = `<span class="${current === 'X' ? 'x-cell' : 'o-cell'}">${current}</span>`;
+
+                const winLine = checkWin(current);
+                if (winLine) {
+                    status.textContent = current + ' wygrywa!';
+                    status.classList.remove('status-x', 'status-o');
+                    status.classList.add(current === 'X' ? 'status-x' : 'status-o');
+                    gameOver = true;
+                    if (current === 'X') scoreX++;
+                    else scoreO++;
+                    updateScoreboard();
+                    highlightWin(winLine); // <--- dodaj to
+                } else if (board.every(cell => cell)) {
+                    status.textContent = 'Remis!';
+                    gameOver = true;
+                } else {
+                    current = current === 'X' ? 'O' : 'X';
+                    status.textContent = 'Tura: ' + current;
+                    status.className = current === 'X' ? 'status-x' : 'status-o';
+                }
+            }
+            function highlightWin(indices) {
+                const cells = document.querySelectorAll('.cell');
+                indices.forEach(i => {
+                    cells[i].classList.add('win-cell');
+                });
+            }
+
+            function checkWin(p) {
+                const winPatterns = [
+                    [0,1,2],[3,4,5],[6,7,8],
+                    [0,3,6],[1,4,7],[2,5,8],
+                    [0,4,8],[2,4,6]
+                ];
+                for (const pattern of winPatterns) {
+                    if (pattern.every(index => board[index] === p)) {
+                        return pattern; // Zwróć zwycięskie indeksy
+                    }
+                }
+                return null;
+            }
+
+            function resetGame() {
+                board = Array(9).fill('');
+                current = 'X';
+                gameOver = false;
+                status.textContent = 'Tura: ' + current;
+                status.className = 'status-x';
+                createBoard();
+                updateScoreboard();
+                document.querySelectorAll('.cell').forEach(cell => cell.classList.remove('win-cell'));
+            }
+
+            resetGame();
+            updateScoreboard();
+        </script>
+
+
+    </main>
+    <footer style="margin: 0%;">
+        <section id="social">
+            <p>
+            <a  style="color: #E1306C; margin-right: 15px; text-decoration: none;" target="_blank" href="https://www.instagram.com/team_vision_studio">
+                <i class="fab fa-instagram fa-2x"></i>
+            </a>
+            <a style="color: #00d1e0; margin-right: 15px; text-decoration: none;" target="_blank" href="https://www.tiktok.com/@team_vision_sudio">
+                <i class="fab fa-tiktok fa-2x"></i>
+            </a>
+            <a style="color: blue; margin-right: 15px; text-decoration: none;"  target="_blank" href="https://www.facebook.com/profile.php?id=61556092873561">
+                <i class="fab fa-facebook fa-2x"></i>
+            </a>
+            <a style="color: red; margin-right: 15px; text-decoration: none;" target="_blank" href="https://www.youtube.com/@Team_Vision_Studio">
+                <i class="fab fa-youtube fa-2x"></i>
+            </a>
+            <br>
+        </p>
+        </section>
+        <section id="copy">
+            <br>
+            <p id="copy">© 2025 Team Vision Studio. Wszelkie prawa zastrzeżone.</p>
+        </section>
+        
+    </footer>
+    <audio id="bg-music" autoplay loop>
+        <source src="3RfCDY9hQg5i.mp3" type="audio/mpeg" />
+    </audio>
+    <script>
+    document.getElementById('bg-music').volume = 0.05;  
+    </script>
+</body>
+</html>
