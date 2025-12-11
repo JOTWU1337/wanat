@@ -108,6 +108,8 @@ function evaluate(tokens) {
 function updateDisplay() {
   if (input === "69") {
     document.getElementById("display").value = "69 Nice";
+  } else if(input==67){
+    document.getElementById("display").value = "Setty luźna guma";
   } else {
     document.getElementById("display").value = input;
   }
@@ -116,3 +118,4 @@ function updateDisplay() {
 document.getElementById("guzik").addEventListener("click", function () {
   document.body.classList.toggle("white-mode");
 });
+
