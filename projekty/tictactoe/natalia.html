@@ -8,12 +8,30 @@
 <body>
     <main>
         <div style="display: flex; justify-content: center;">
-            <h1 style="color: red; font-size: 100px;">Natalia kocha Nicolasa</h1>
+            <h1 style="color: red; font-size: 100px;">Sprawdź match z twoją drugą połówką</h1>
         </div>
         <div style="display: flex; justify-content: center;">
-            <img style="width: 1200px;" src="TAPETA.png" alt="">
+            <div>
+                <label for="osoba1">Osoba 1:</label>
+                <br>
+                <input type="text" name="osoba1" id="osoba1">
+            </div>
+            <div style="margin-left: 40px;">
+                <label for="osoba2">Osoba 2:</label>
+                <br>
+                <input type="text" name="osoba2" id="osoba2">
+            </div>
+            
+        </div>
+        <br><br>
+        <div style="display: flex; justify-content: center;">
+            <button onclick="sprawdz()">Sprawdz</button>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <h2 id="wynik"></h2>
         </div>
         
     </main>
 </body>
+<script src="java.js"></script>
 </html>
