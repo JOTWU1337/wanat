@@ -1,6 +1,6 @@
 function sprawdz(){
-    let osoba1 = document.getElementById("osoba1").value.trim().toLowerCase();
-    let osoba2 = document.getElementById("osoba2").value.trim().toLowerCase();
+    let osoba1 = document.getElementById("osoba1").value.toLowerCase();
+    let osoba2 = document.getElementById("osoba2").value.toLowerCase();
 
     let wynik = document.getElementById("wynik");
 
