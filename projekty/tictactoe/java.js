@@ -8,6 +8,8 @@ function sprawdz(){
         wynik.innerHTML = "100% ❤️ Pewniak";
     } else if((osoba1 === "natalia" && osoba2 === "alan") || (osoba1 === "alan" && osoba2 === "natalia")){
         wynik.innerHTML = "101% stara miłość nie rdzewieje";
+    }else if((osoba1 === "szymon" && osoba2 === "nadia") || (osoba1 === "nadia" && osoba2 === "szymon")){
+        wynik.innerHTML = "99% ❤️";
     } else {
         let procent = Math.floor(Math.random() * 101);
         wynik.innerHTML = procent + "% 🤔";
