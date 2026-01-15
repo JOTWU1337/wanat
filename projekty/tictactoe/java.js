@@ -9,7 +9,13 @@ function sprawdz(){
         (osoba1 === "nicolas" && osoba2 === "natalia")
     ){
         wynik.innerHTML = "100% ❤️ Pewniak";
-    } else {
+    } else if(
+        (osoba1 === "natalia" && osoba2 === "alan") ||
+        (osoba1 === "alan" && osoba2 === "natalia")
+    ){
+        wynik.innerHTML = "0% nie ma co sie brać za to";
+    }
+    else {
         let procent = Math.floor(Math.random() * 101);
         wynik.innerHTML = procent + "% 🤔";
     }
