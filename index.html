@@ -1,130 +1,1687 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Moje Projekty</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #0d0d0d;
-      font-family: Arial, sans-serif;
-      color: #fff;
-    }
-    header {
-      text-align: center;
-      padding: 60px 20px;
-      background: linear-gradient(135deg, #2b2b2b, #111);
-      border-bottom: 2px solid #444;
-    }
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-    }
-    p.subtitle {
-      font-size: 1.2rem;
-      opacity: 0.8;
-    }
-    .container {
-      max-width: 900px;
-      margin: 60px auto;
-      padding: 0 20px;
-    }
-    .link-card {
-      background: #1a1a1a;
-      padding: 25px;
-      border-radius: 14px;
-      margin-bottom: 20px;
-      border: 1px solid #333;
-      transition: 0.2s ease;
-      cursor: pointer;
-    }
-    .link-card:hover {
-      transform: translateY(-4px);
-      background: #222;
-      border-color: #666;
-    }
-    .link-card h2 {
-      margin: 0 0 8px 0;
-      font-size: 1.6rem;
-      color: #fff;
-    }
-    .link-card p {
-      margin: 0;
-      opacity: 0.7;
-    }
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NORWID — Liceum Ogólnokształcące</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1E35;--navy-mid:#142945;--navy-light:#1D3A5F;
+  --gold:#C4973A;--gold-light:#DDB96A;--gold-pale:#F0DFB8;
+  --cream:#F6F1E9;--cream-dark:#EDE5D6;--warm-white:#FAF8F4;
+  --text-dark:#0D1B2E;--text-mid:#3A4F68;--text-light:#6B82A0;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Outfit',sans-serif;
+  --tr:0.3s cubic-bezier(.4,0,.2,1);
+  --shadow:0 4px 24px rgba(11,30,53,.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--warm-white);color:var(--text-dark);overflow-x:hidden;min-height:100vh}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(11,30,53,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(196,151,58,.2);height:68px;display:flex;align-items:center;padding:0 2.5rem;justify-content:space-between}
+.nav-logo{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:#fff;letter-spacing:.12em;text-decoration:none;display:flex;align-items:center;gap:12px;cursor:pointer}
+.logo-badge{width:36px;height:36px;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:600;letter-spacing:.1em;color:var(--gold);font-family:var(--sans)}
+.nav-links{display:flex;align-items:center;gap:0}
+.nav-links a,.nav-item{color:rgba(255,255,255,.75);text-decoration:none;font-size:.76rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:.6rem 1rem;transition:color var(--tr);position:relative;cursor:pointer;background:none;border:none}
+.nav-links a:hover,.nav-item:hover{color:#fff}
+.nav-links a::after,.nav-item::after{content:'';position:absolute;bottom:0;left:1rem;right:1rem;height:1px;background:var(--gold);transform:scaleX(0);transition:transform var(--tr);transform-origin:left}
+.nav-links a:hover::after,.nav-item:hover::after{transform:scaleX(1)}
+.nav-links a.active,.nav-item.active{color:var(--gold)}
+.nav-cta{background:var(--gold)!important;color:var(--navy)!important;padding:.5rem 1.2rem!important;font-weight:600!important}
+.nav-cta:hover{background:var(--gold-light)!important;color:var(--navy)!important}
+.nav-cta::after{display:none!important}
+.nav-dropdown{position:relative}
+.nav-dropdown-menu{position:absolute;top:100%;left:0;background:var(--navy);border:1px solid rgba(196,151,58,.15);min-width:240px;display:none;flex-direction:column;z-index:300;box-shadow:var(--shadow)}
+.nav-dropdown:hover .nav-dropdown-menu{display:flex}
+.nav-dropdown-menu a{padding:.7rem 1.2rem;color:rgba(255,255,255,.7);text-decoration:none;font-size:.74rem;font-weight:500;letter-spacing:.06em;border-bottom:1px solid rgba(255,255,255,.04);transition:background var(--tr),color var(--tr)}
+.nav-dropdown-menu a:hover{background:rgba(196,151,58,.1);color:#fff}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:.5rem}
+.nav-hamburger span{display:block;width:24px;height:1.5px;background:#fff;transition:var(--tr)}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;bottom:0;background:var(--navy);z-index:199;overflow-y:auto;padding:2rem}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;color:rgba(255,255,255,.8);text-decoration:none;font-size:1.1rem;font-family:var(--serif);padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.mobile-menu a:hover{color:var(--gold)}
+
+/* ── PAGE WRAPPER ── */
+#app{padding-top:68px;min-height:100vh}
+
+/* ── ANNOUNCE BAR ── */
+.announce{background:var(--gold);padding:.65rem 2.5rem;display:flex;align-items:center;justify-content:center;gap:1rem;font-size:.78rem;font-weight:600;color:var(--navy);text-align:center}
+.announce a{color:var(--navy);font-weight:700;text-decoration:underline;cursor:pointer}
+
+/* ── HERO ── */
+.hero{min-height:92vh;background:var(--navy);display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;padding:0 0 5rem}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 30%,rgba(196,151,58,.07) 0%,transparent 70%),radial-gradient(ellipse 50% 80% at 10% 80%,rgba(29,58,95,.6) 0%,transparent 60%)}
+.hero-year{position:absolute;right:-.02em;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:clamp(18rem,32vw,38rem);font-weight:700;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(196,151,58,.1);letter-spacing:-.04em;user-select:none;pointer-events:none}
+.hero-content{position:relative;z-index:2;padding:0 2.5rem;max-width:900px}
+.hero-eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:12px}
+.hero-eyebrow::before{content:'';display:block;width:40px;height:1px;background:var(--gold)}
+.hero-title{font-family:var(--serif);font-size:clamp(3.5rem,8vw,7.5rem);font-weight:300;line-height:1;color:#fff;letter-spacing:-.02em;margin-bottom:1rem}
+.hero-title em{font-style:italic;color:var(--gold-light);font-weight:300}
+.hero-sub{font-family:var(--serif);font-size:1.3rem;font-weight:300;color:rgba(255,255,255,.5);font-style:italic;margin-bottom:3rem}
+.hero-stats{display:flex;gap:3rem;flex-wrap:wrap}
+.hero-stat-num{font-family:var(--serif);font-size:2.8rem;font-weight:600;color:#fff;line-height:1}
+.hero-stat-num span{color:var(--gold)}
+.hero-stat-label{font-size:.7rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:4px}
+.hero-div{width:1px;background:rgba(255,255,255,.1);height:60px;align-self:center}
+.ranking-badge{position:absolute;top:5rem;right:2.5rem;background:rgba(196,151,58,.12);border:1px solid rgba(196,151,58,.3);padding:1rem 1.5rem;text-align:center;z-index:2}
+.ranking-text{font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+.ranking-year{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--gold-light);line-height:1}
+
+/* ── QUICKLINKS ── */
+.quicklinks{background:var(--cream);border-bottom:1px solid var(--cream-dark)}
+.ql-grid{display:grid;grid-template-columns:repeat(5,1fr);max-width:1400px;margin:0 auto}
+.ql-item{padding:1.8rem 1.2rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.6rem;text-decoration:none;color:var(--text-dark);border-right:1px solid var(--cream-dark);transition:background var(--tr);position:relative;cursor:pointer}
+.ql-item::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transition:transform var(--tr)}
+.ql-item:hover{background:var(--warm-white)}
+.ql-item:hover::before{transform:scaleX(1)}
+.ql-item:last-child{border-right:none}
+.ql-icon{width:40px;height:40px;border:1.5px solid rgba(196,151,58,.4);display:flex;align-items:center;justify-content:center;color:var(--gold)}
+.ql-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5}
+.ql-label{font-size:.74rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-mid)}
+
+/* ── SECTION HELPERS ── */
+.section-wrap{padding:5rem 2.5rem;max-width:1400px;margin:0 auto}
+.section-wrap-dark{padding:6rem 2.5rem;background:var(--navy);position:relative;overflow:hidden}
+.section-wrap-cream{padding:5rem 2.5rem;background:var(--cream)}
+.section-header{display:flex;align-items:baseline;gap:1.5rem;margin-bottom:3rem;flex-wrap:wrap}
+.section-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
+.section-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:300;line-height:1.1;color:var(--text-dark);letter-spacing:-.01em}
+.section-title-white{color:#fff}
+.section-line{flex:1;height:1px;background:var(--cream-dark);min-width:40px}
+.section-line-dark{background:rgba(255,255,255,.08)}
+
+/* ── NEWS GRID ── */
+.news-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:2px}
+.news-card{background:var(--cream);overflow:hidden;position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:var(--tr);cursor:pointer}
+.news-card:hover{background:var(--warm-white)}
+.news-card.featured{grid-row:span 2}
+.news-card-img-wrap{overflow:hidden}
+.news-card-img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--navy-light);transition:transform .5s ease,filter .5s ease}
+.news-card.featured .news-card-img{aspect-ratio:4/5}
+.news-card:hover .news-card-img{transform:scale(1.03);filter:brightness(1.05)}
+.news-card-body{padding:1.5rem;flex:1;display:flex;flex-direction:column;gap:.4rem}
+.news-card.featured .news-card-body{padding:2rem}
+.news-date{font-size:.68rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+.news-title{font-family:var(--serif);font-weight:600;line-height:1.3;color:var(--text-dark)}
+.news-card.featured .news-title{font-size:1.55rem;font-weight:400}
+.news-card:not(.featured) .news-title{font-size:.98rem}
+.news-arrow{margin-top:auto;padding-top:.8rem;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);display:flex;align-items:center;gap:6px;transition:color var(--tr),gap var(--tr)}
+.news-card:hover .news-arrow{color:var(--gold);gap:10px}
+.news-arrow svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* ── NEWS LIST (Aktualności page) ── */
+.news-list{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.news-list-item{background:var(--cream);text-decoration:none;color:inherit;display:flex;flex-direction:column;overflow:hidden;transition:background var(--tr);cursor:pointer}
+.news-list-item:hover{background:var(--cream-dark)}
+.news-list-item img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--navy-light)}
+.news-list-body{padding:1.5rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+
+/* ── PAGE HERO ── */
+.page-hero{background:var(--navy);padding:6rem 2.5rem 4rem;position:relative;overflow:hidden}
+.page-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(196,151,58,.06) 0%,transparent 70%)}
+.page-hero-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:10px;position:relative;z-index:1}
+.page-hero-eyebrow::before{content:'';display:block;width:30px;height:1px;background:var(--gold)}
+.page-hero-title{font-family:var(--serif);font-size:clamp(2.5rem,6vw,5.5rem);font-weight:300;line-height:1.05;color:#fff;position:relative;z-index:1;letter-spacing:-.02em}
+.page-hero-title em{font-style:italic;color:var(--gold-light)}
+.page-hero-deco{position:absolute;right:-1rem;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:20rem;font-weight:700;color:transparent;-webkit-text-stroke:1px rgba(196,151,58,.05);line-height:1;user-select:none;pointer-events:none}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{background:var(--cream);padding:.8rem 2.5rem;border-bottom:1px solid var(--cream-dark);display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:var(--text-light)}
+.breadcrumb a,.breadcrumb span[data-nav]{color:var(--gold);cursor:pointer;text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+
+/* ── CONTENT PROSE ── */
+.prose{font-family:var(--serif);font-size:1.1rem;line-height:1.9;color:var(--text-mid);font-weight:300}
+.prose p+p{margin-top:1.2rem}
+.prose h3{font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--text-dark);margin:2rem 0 .8rem}
+.prose ul{padding-left:1.5rem;margin:1rem 0}
+.prose ul li{margin:.4rem 0}
+
+/* ── TWO-COL ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+
+/* ── CARDS ── */
+.card{background:var(--cream);padding:2rem;border-left:3px solid var(--gold);transition:background var(--tr)}
+.card:hover{background:var(--cream-dark)}
+.card-title{font-family:var(--serif);font-size:1.3rem;font-weight:600;margin-bottom:.6rem}
+.card-text{font-size:.9rem;line-height:1.7;color:var(--text-mid)}
+.info-block{background:var(--cream);padding:2.5rem;margin-bottom:2px}
+.info-block-title{font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.info-block-val{font-family:var(--serif);font-size:1.3rem;color:var(--text-dark)}
+
+/* ── TABLE ── */
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--navy);color:#fff}
+th{padding:.9rem 1.2rem;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-align:left}
+td{padding:.85rem 1.2rem;font-size:.9rem;border-bottom:1px solid var(--cream-dark);color:var(--text-mid)}
+tr:hover td{background:var(--cream)}
+
+/* ── GALLERY ── */
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.gallery-item{aspect-ratio:1;overflow:hidden;cursor:pointer;background:var(--cream-dark)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease,filter .5s ease}
+.gallery-item:hover img{transform:scale(1.08);filter:brightness(1.1)}
+
+/* ── LIGHTBOX ── */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:500;display:none;align-items:center;justify-content:center}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90vw;max-height:90vh;object-fit:contain}
+.lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;width:48px;height:48px;display:flex;align-items:center;justify-content:center}
+
+/* ── HISTORY NUMBERS ── */
+.hist-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.hist-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:2.5rem 2rem;transition:background var(--tr)}
+.hist-card:hover{background:rgba(196,151,58,.07)}
+.hist-num{font-family:var(--serif);font-size:3.5rem;font-weight:600;color:var(--gold-light);line-height:1}
+.hist-label{font-size:.7rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:.5rem}
+
+/* ── TEAM GRID ── */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.team-card{background:var(--cream);padding:2rem 1.5rem;text-align:center;transition:background var(--tr)}
+.team-card:hover{background:var(--cream-dark)}
+.team-avatar{width:80px;height:80px;border-radius:50%;background:var(--navy);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.8rem;font-weight:600;color:var(--gold-light)}
+.team-name{font-family:var(--serif);font-size:1.1rem;font-weight:600;margin-bottom:.3rem}
+.team-role{font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-light)}
+.team-subject{font-size:.85rem;color:var(--text-mid);margin-top:.3rem}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:5rem;align-items:start}
+.contact-item{margin-bottom:2rem}
+.contact-label{font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.contact-val{font-family:var(--serif);font-size:1.1rem}
+.map-placeholder{background:var(--cream);height:350px;display:flex;align-items:center;justify-content:center;border:1px solid var(--cream-dark);font-family:var(--serif);font-size:1.1rem;color:var(--text-light)}
+.ext-links{display:flex;flex-wrap:wrap;gap:2px;margin-top:1.5rem}
+.ext-link{padding:.6rem 1.1rem;background:var(--cream-dark);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--text-mid);transition:background var(--tr),color var(--tr);cursor:pointer}
+.ext-link:hover{background:var(--navy);color:#fff}
+
+/* ── CTA BUTTON ── */
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:.85rem 2rem;border:1px solid var(--gold);color:var(--gold);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:background var(--tr),color var(--tr);cursor:pointer;background:none}
+.btn-primary:hover{background:var(--gold);color:var(--navy)}
+.btn-primary svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.btn-navy{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn-navy:hover{background:var(--navy-light);color:#fff}
+
+/* ── ACCORDION ── */
+.accordion-item{border-bottom:1px solid var(--cream-dark)}
+.accordion-head{padding:1.2rem 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:var(--serif);font-size:1.1rem;font-weight:600;transition:color var(--tr)}
+.accordion-head:hover{color:var(--gold)}
+.accordion-head .acc-icon{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:2;flex-shrink:0;transition:transform var(--tr)}
+.accordion-item.open .acc-icon{transform:rotate(45deg)}
+.accordion-body{display:none;padding:0 0 1.2rem;font-size:.95rem;line-height:1.75;color:var(--text-mid)}
+.accordion-item.open .accordion-body{display:block}
+
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-left:2.5rem}
+.timeline::before{content:'';position:absolute;left:0;top:.5rem;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold),rgba(196,151,58,.1))}
+.tl-item{position:relative;margin-bottom:2.5rem;padding-left:1rem}
+.tl-dot{position:absolute;left:-2.8rem;top:.4rem;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid var(--warm-white)}
+.tl-year{font-size:.72rem;font-weight:600;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:.3rem}
+.tl-title{font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:.4rem}
+.tl-text{font-size:.9rem;line-height:1.7;color:var(--text-mid)}
+
+/* ── DOCUMENT LIST ── */
+.doc-list{display:flex;flex-direction:column;gap:2px}
+.doc-item{background:var(--cream);padding:1.2rem 1.5rem;display:flex;align-items:center;gap:1rem;transition:background var(--tr)}
+.doc-item:hover{background:var(--cream-dark)}
+.doc-icon{width:36px;height:36px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.doc-icon svg{width:16px;height:16px;stroke:var(--gold-light);fill:none;stroke-width:1.5}
+.doc-name{font-size:.92rem;font-weight:500;flex:1}
+.doc-size{font-size:.75rem;color:var(--text-light)}
+.doc-dl{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);text-decoration:none;cursor:pointer}
+
+/* ── ADMIN ── */
+.admin-layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 68px)}
+.admin-sidebar{background:var(--navy);padding:2rem 0;border-right:1px solid rgba(196,151,58,.15)}
+.admin-sidebar-header{padding:0 1.5rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.admin-sidebar-title{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:#fff}
+.admin-sidebar-sub{font-size:.72rem;color:rgba(255,255,255,.35);letter-spacing:.08em;margin-top:.2rem}
+.admin-nav-item{display:flex;align-items:center;gap:.75rem;padding:.8rem 1.5rem;color:rgba(255,255,255,.6);cursor:pointer;transition:background var(--tr),color var(--tr);font-size:.85rem;font-weight:500;letter-spacing:.04em;text-decoration:none}
+.admin-nav-item:hover{background:rgba(255,255,255,.05);color:#fff}
+.admin-nav-item.active{background:rgba(196,151,58,.12);color:var(--gold);border-left:2px solid var(--gold)}
+.admin-nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0}
+.admin-nav-section{padding:.8rem 1.5rem .3rem;font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+.admin-content{background:var(--warm-white);padding:2.5rem}
+.admin-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
+.admin-page-title{font-family:var(--serif);font-size:2rem;font-weight:400;color:var(--text-dark)}
+.btn-add{background:var(--navy);color:#fff;border:none;padding:.7rem 1.5rem;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background var(--tr)}
+.btn-add:hover{background:var(--navy-light)}
+.btn-add svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* Admin stats */
+.admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem}
+.admin-stat{background:var(--cream);padding:1.5rem;border-left:3px solid var(--gold)}
+.admin-stat-num{font-family:var(--serif);font-size:2.2rem;font-weight:600;color:var(--text-dark);line-height:1}
+.admin-stat-label{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);margin-top:.3rem}
+
+/* Admin table */
+.admin-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--cream-dark)}
+.admin-table th{background:var(--cream);padding:.85rem 1rem;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:left;color:var(--text-mid);border-bottom:1px solid var(--cream-dark)}
+.admin-table td{padding:.85rem 1rem;font-size:.88rem;color:var(--text-dark);border-bottom:1px solid var(--cream-dark);vertical-align:middle}
+.admin-table tr:hover td{background:var(--cream)}
+.badge{display:inline-block;padding:.25rem .7rem;font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-radius:2px}
+.badge-pub{background:#d1fae5;color:#065f46}
+.badge-draft{background:#fef3c7;color:#92400e}
+.tbl-actions{display:flex;gap:.5rem}
+.tbl-btn{padding:.35rem .75rem;font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1px solid;transition:var(--tr)}
+.tbl-btn-edit{border-color:var(--navy);color:var(--navy);background:none}
+.tbl-btn-edit:hover{background:var(--navy);color:#fff}
+.tbl-btn-del{border-color:#dc2626;color:#dc2626;background:none}
+.tbl-btn-del:hover{background:#dc2626;color:#fff}
+.tbl-img{width:52px;height:36px;object-fit:cover;background:var(--cream-dark)}
+
+/* Admin form modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;display:none;align-items:flex-start;justify-content:center;padding:5rem 1rem 2rem;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;width:100%;max-width:700px;border:1px solid var(--cream-dark);animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+.modal-header{background:var(--navy);padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.modal-title{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:#fff}
+.modal-close{background:none;border:none;color:rgba(255,255,255,.6);font-size:1.5rem;cursor:pointer;transition:color var(--tr)}
+.modal-close:hover{color:#fff}
+.modal-body{padding:2rem}
+.form-group{margin-bottom:1.5rem}
+.form-label{display:block;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-mid);margin-bottom:.5rem}
+.form-input,.form-textarea,.form-select{width:100%;padding:.75rem 1rem;border:1px solid var(--cream-dark);background:var(--cream);font-family:var(--sans);font-size:.9rem;color:var(--text-dark);transition:border-color var(--tr);outline:none}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--gold)}
+.form-textarea{min-height:120px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.upload-area{border:2px dashed var(--cream-dark);padding:2rem;text-align:center;cursor:pointer;transition:border-color var(--tr),background var(--tr)}
+.upload-area:hover{border-color:var(--gold);background:var(--cream)}
+.upload-area-text{font-size:.85rem;color:var(--text-light)}
+.upload-area-text strong{color:var(--gold)}
+.upload-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:1rem}
+.upload-preview-item{aspect-ratio:1;overflow:hidden;position:relative}
+.upload-preview-item img{width:100%;height:100%;object-fit:cover}
+.upload-preview-item .rm{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.7);color:#fff;border:none;width:18px;height:18px;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center}
+.modal-footer{padding:1rem 2rem;background:var(--cream);display:flex;justify-content:flex-end;gap:.75rem;border-top:1px solid var(--cream-dark)}
+.btn-save{background:var(--navy);color:#fff;border:none;padding:.7rem 2rem;font-size:.82rem;font-weight:600;letter-spacing:.08em;cursor:pointer;transition:background var(--tr)}
+.btn-save:hover{background:var(--navy-light)}
+.btn-cancel{background:none;border:1px solid var(--cream-dark);color:var(--text-mid);padding:.7rem 1.5rem;font-size:.82rem;font-weight:600;cursor:pointer;letter-spacing:.08em;transition:var(--tr)}
+.btn-cancel:hover{background:var(--cream-dark)}
+
+/* Admin login */
+.admin-login{max-width:400px;margin:6rem auto;background:var(--cream);padding:3rem;border-left:3px solid var(--gold)}
+.admin-login-logo{font-family:var(--serif);font-size:1.8rem;font-weight:600;color:var(--text-dark);margin-bottom:.3rem}
+.admin-login-sub{font-size:.78rem;color:var(--text-light);letter-spacing:.06em;margin-bottom:2rem}
+.login-error{background:#fef2f2;border:1px solid #fecaca;padding:.75rem 1rem;font-size:.85rem;color:#dc2626;margin-bottom:1rem;display:none}
+
+/* ── FOOTER ── */
+footer{background:var(--navy);padding:2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:auto}
+footer .foot-logo{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:.1em}
+footer .foot-motto{font-family:var(--serif);font-size:.85rem;font-style:italic;color:rgba(255,255,255,.25)}
+footer .foot-links{display:flex;gap:1.5rem}
+footer .foot-links a{font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);text-decoration:none;cursor:pointer;transition:color var(--tr)}
+footer .foot-links a:hover{color:var(--gold)}
+
+/* ── FADE IN ── */
+.fi{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.fi.vis{opacity:1;transform:translateY(0)}
+
+/* ── SUCCESS FLASH ── */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--navy);color:#fff;padding:1rem 1.5rem;font-size:.85rem;font-weight:500;z-index:700;display:none;border-left:3px solid var(--gold);animation:toastIn .3s ease}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .news-grid{grid-template-columns:1fr 1fr}
+  .news-card.featured{grid-column:span 2;grid-row:auto}
+  .news-card.featured .news-card-img{aspect-ratio:16/7}
+  .team-grid{grid-template-columns:repeat(3,1fr)}
+  .admin-layout{grid-template-columns:220px 1fr}
+}
+@media(max-width:768px){
+  nav .nav-links{display:none}
+  .nav-hamburger{display:flex}
+  .ql-grid{grid-template-columns:repeat(2,1fr)}
+  .ql-item:nth-child(odd){border-right:1px solid var(--cream-dark)}
+  .ql-item:nth-child(even){border-right:none}
+  .news-grid{grid-template-columns:1fr}
+  .news-card.featured{grid-column:auto}
+  .two-col,.three-col{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .hist-grid{grid-template-columns:1fr 1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .admin-layout{grid-template-columns:1fr}
+  .admin-sidebar{display:none}
+  .admin-stats{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .news-list{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Moje Projekty</h1>
-    <p class="subtitle">Witaj na mojej centralnej stronie — wybierz, co chcesz odpalić 🔥</p>
-  </header>
 
-  <div class="container">
-    <a href="projekty/snake/snake.html">
-      <div class="link-card">
-        <h2>🐍 Snake Game</h2>
-        <p>Klasyczna gierka — prosta, ale wciągająca.</p>
-      </div>
-    </a>
-    <a href="projekty/kalkulator/kalkulator.html">
-      <div class="link-card">
-        <h2>Kalkulator</h2>
-        <p>Zwykły kalkulator - nic bardziej mylnego.</p>
-      </div>
-    </a>
-    <a href="projekty/connect/connect4.html">
-      <div class="link-card">
-        <h2>Connect 4</h2>
-        <p>Standardowa prosta wersja Connect 4.</p>
-      </div>
-    </a>
-    <a href="projekty/tictactoe/tictactoe.html">
-      <div class="link-card">
-        <h2>Tic Tac Toe</h2>
-        <p>Tic Tac Toe - fire.</p>
-      </div>
-    </a>
-    <a href="projekty/socialapp/public/index.php">
-      <div class="link-card">
-        <h2>Social App</h2>
-        <p>nie skonczone</p>
-      </div>
-    </a>
-    <a href="projekty/wisielec/index.html">
-      <div class="link-card">
-        <h2>Wisielec</h2>
-        <p>Zgdanij słowo</p>
-      </div>
-    </a>
-    <a href="projekty/norwid/index.html">
-      <div class="link-card">
-        <h2>Norwid</h2>
-        <p>Lepsza strona norwida</p>
-      </div>
-    </a>
-
-    <!-- Dodawaj tu kolejne podstrony → kopiuj i wklej blok link-card -->
-    <!--
-    <a href="twoj_plik.html">
-      <div class="link-card">
-        <h2>Nazwa Projektu</h2>
-        <p>Krótki opis.</p>
-      </div>
-    </a>
-    -->
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="navigate('home')">
+    <div class="logo-badge">CKN</div>
+    NORWID
   </div>
+  <div class="nav-links">
+    <span class="nav-item" onclick="navigate('aktualnosci')">Aktualności</span>
+    <div class="nav-dropdown">
+      <span class="nav-item">O szkole ▾</span>
+      <div class="nav-dropdown-menu">
+        <a onclick="navigate('o-szkole')">O szkole</a>
+        <a onclick="navigate('patron')">Patron</a>
+        <a onclick="navigate('historia')">Historia</a>
+        <a onclick="navigate('kadra')">Kadra pedagogiczna</a>
+        <a onclick="navigate('dokumenty')">Dokumenty</a>
+        <a onclick="navigate('sukcesy')">Sukcesy</a>
+        <a onclick="navigate('rankingi')">Rankingi</a>
+        <a onclick="navigate('galeria')">Galeria</a>
+        <a onclick="navigate('goniec')">Goniec Nowomiejski</a>
+        <a onclick="navigate('wspolpraca')">Współpraca</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <span class="nav-item">Kandydaci ▾</span>
+      <div class="nav-dropdown-menu">
+        <a onclick="navigate('kandydaci')">Kandydaci</a>
+        <a onclick="navigate('oferta')">Oferta edukacyjna</a>
+        <a onclick="navigate('rekrutacja')">Rekrutacja 2026/2027</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <span class="nav-item">Uczniowie ▾</span>
+      <div class="nav-dropdown-menu">
+        <a onclick="navigate('uczniowie')">Uczniowie</a>
+        <a onclick="navigate('samorzad')">Samorząd uczniowski</a>
+        <a onclick="navigate('doradca')">Doradca zawodowy</a>
+        <a onclick="navigate('pedagog')">Pedagog</a>
+        <a onclick="navigate('psycholog')">Psycholog</a>
+        <a onclick="navigate('podreczniki')">Podręczniki</a>
+        <a onclick="navigate('do-pobrania-ucz')">Do pobrania</a>
+        <a onclick="navigate('konkursy')">Konkursy</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <span class="nav-item">Rodzice ▾</span>
+      <div class="nav-dropdown-menu">
+        <a onclick="navigate('rodzice')">Rodzice</a>
+        <a onclick="navigate('rada-rodzicow')">Rada Rodziców</a>
+        <a onclick="navigate('do-pobrania-rod')">Do pobrania</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <span class="nav-item">Absolwenci ▾</span>
+      <div class="nav-dropdown-menu">
+        <a onclick="navigate('absolwenci')">Absolwenci</a>
+        <a onclick="navigate('galeria-abs')">Galeria Absolwentów</a>
+        <a onclick="navigate('160-lecie')">160-lecie</a>
+        <a onclick="navigate('150-lecie')">150-lecie</a>
+      </div>
+    </div>
+    <span class="nav-item nav-cta" onclick="navigate('kontakt')">Kontakt</span>
+  </div>
+  <button class="nav-hamburger" onclick="toggleMobile()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="navigate('home');toggleMobile()">Strona główna</a>
+  <a onclick="navigate('aktualnosci');toggleMobile()">Aktualności</a>
+  <a onclick="navigate('o-szkole');toggleMobile()">O szkole</a>
+  <a onclick="navigate('patron');toggleMobile()">→ Patron</a>
+  <a onclick="navigate('historia');toggleMobile()">→ Historia</a>
+  <a onclick="navigate('kadra');toggleMobile()">→ Kadra</a>
+  <a onclick="navigate('galeria');toggleMobile()">→ Galeria</a>
+  <a onclick="navigate('dokumenty');toggleMobile()">→ Dokumenty</a>
+  <a onclick="navigate('sukcesy');toggleMobile()">→ Sukcesy</a>
+  <a onclick="navigate('oferta');toggleMobile()">Oferta edukacyjna</a>
+  <a onclick="navigate('rekrutacja');toggleMobile()">Rekrutacja</a>
+  <a onclick="navigate('uczniowie');toggleMobile()">Uczniowie</a>
+  <a onclick="navigate('samorzad');toggleMobile()">→ Samorząd</a>
+  <a onclick="navigate('pedagog');toggleMobile()">→ Pedagog / Psycholog</a>
+  <a onclick="navigate('konkursy');toggleMobile()">→ Konkursy</a>
+  <a onclick="navigate('rodzice');toggleMobile()">Rodzice</a>
+  <a onclick="navigate('absolwenci');toggleMobile()">Absolwenci</a>
+  <a onclick="navigate('kontakt');toggleMobile()">Kontakt</a>
+</div>
+
+<div id="app"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Dodaj wpis</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Anuluj</button>
+      <button class="btn-save" id="modalSaveBtn" onclick="saveModalForm()">Zapisz</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let currentPage = 'home';
+let adminLoggedIn = localStorage.getItem('norwid_admin') === '1';
+let adminSection = 'posts';
+let modalCallback = null;
+let editingId = null;
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const defaultPosts = [
+  {id:1,title:'Projekt „Lekcje z ZUS"',date:'2026-03-27',status:'published',excerpt:'Uczniowie naszego liceum wzięli udział w projekcie edukacyjnym dotyczącym finansów i ubezpieczeń społecznych.',img:'https://www.norwid.eu/wp-content/uploads/2026/03/xWhatsApp-Image-2026-03-27-at-11.59.26-400x300.jpeg.pagespeed.ic.F1LXSgF9A_.jpg',category:'Projekty'},
+  {id:2,title:'Ogólnopolski Turniej Wiedzy Pożarniczej',date:'2026-03-26',status:'published',excerpt:'Uczniowie wzięli udział w turnieju „Młodzież Zapobiega Pożarom" i osiągnęli znakomite wyniki.',img:'https://www.norwid.eu/wp-content/uploads/2026/03/xWhatsApp-Image-2026-03-26-at-09.44.27-400x300.jpeg.pagespeed.ic.gKfriMreLT.jpg',category:'Konkursy'},
+  {id:3,title:'IX Powiatowy Konkurs Savoir-Vivre „Stół z klasą"',date:'2026-03-26',status:'published',excerpt:'Nasi uczniowie zaprezentowali wysoki poziom kultury i elegancji w konkursie savoir-vivre.',img:'https://www.norwid.eu/wp-content/uploads/2026/03/xWhatsApp-Image-2026-03-25-at-20.39.31-5-400x300.jpeg.pagespeed.ic.FwPwnwTKRt.jpg',category:'Konkursy'},
+  {id:4,title:'Zdrowy wtorek w naszym liceum!',date:'2026-03-25',status:'published',excerpt:'W ramach promocji zdrowego stylu życia zorganizowaliśmy kolejną edycję Zdrowego Wtorku.',img:'https://www.norwid.eu/wp-content/uploads/2026/03/xWhatsApp-Image-2026-03-25-at-08.36.47-2-400x300.jpeg.pagespeed.ic.7QS7xWoIMD.jpg',category:'Zdrowie'},
+  {id:5,title:'Inicjatywa Młodzieży — „Międzypokoleniowe Mosty"',date:'2026-03-23',status:'published',excerpt:'Projekt łączący uczniów z seniorami zyskał uznanie i media relacjonują jego przebieg.',img:'',category:'Projekty'},
+  {id:6,title:'ŚWIATOWY TYDZIEŃ PIENIĄDZA – Global Money Week 2026',date:'2026-03-20',status:'published',excerpt:'Uczniowie aktywnie uczestniczyli w ogólnoświatowych obchodach tygodnia edukacji finansowej.',img:'',category:'Edukacja'},
+];
+const defaultGallery=[
+  {id:1,title:'Jubileusz 165-lecia szkoły',year:'2023',img:'https://picsum.photos/seed/nor1/600/400'},
+  {id:2,title:'Inauguracja roku szkolnego',year:'2025',img:'https://picsum.photos/seed/nor2/600/400'},
+  {id:3,title:'Wycieczka do Gdańska',year:'2025',img:'https://picsum.photos/seed/nor3/600/400'},
+  {id:4,title:'Olimpiada Matematyczna',year:'2025',img:'https://picsum.photos/seed/nor4/600/400'},
+  {id:5,title:'Dzień Patrona',year:'2025',img:'https://picsum.photos/seed/nor5/600/400'},
+  {id:6,title:'Bal Maturalny 2025',year:'2025',img:'https://picsum.photos/seed/nor6/600/400'},
+  {id:7,title:'Projekt Europejski',year:'2024',img:'https://picsum.photos/seed/nor7/600/400'},
+  {id:8,title:'Akademia 11 Listopada',year:'2024',img:'https://picsum.photos/seed/nor8/600/400'},
+];
+
+function getPosts(){try{const d=localStorage.getItem('norwid_posts');return d?JSON.parse(d):defaultPosts}catch{return defaultPosts}}
+function savePosts(p){localStorage.setItem('norwid_posts',JSON.stringify(p))}
+function getGallery(){try{const d=localStorage.getItem('norwid_gallery');return d?JSON.parse(d):defaultGallery}catch{return defaultGallery}}
+function saveGallery(g){localStorage.setItem('norwid_gallery',JSON.stringify(g))}
+
+// ─── ROUTER ──────────────────────────────────────────────────────────────────
+function navigate(page){
+  currentPage=page;
+  window.location.hash=page;
+  const app=document.getElementById('app');
+  app.innerHTML='';
+  window.scrollTo({top:0,behavior:'smooth'});
+  const pages={
+    'home':renderHome,'aktualnosci':renderAktualnosci,'o-szkole':renderOSzkole,
+    'patron':renderPatron,'historia':renderHistoria,'kadra':renderKadra,
+    'dokumenty':renderDokumenty,'sukcesy':renderSukcesy,'rankingi':renderRankingi,
+    'galeria':renderGaleria,'goniec':renderGoniec,'wspolpraca':renderWspolpraca,
+    'kandydaci':renderKandydaci,'oferta':renderOferta,'rekrutacja':renderRekrutacja,
+    'uczniowie':renderUczniowie,'samorzad':renderSamorzad,'doradca':renderDoradca,
+    'pedagog':renderPedagog,'psycholog':renderPsycholog,'podreczniki':renderPodreczniki,
+    'do-pobrania-ucz':renderDoPobrania,'do-pobrania-rod':renderDoPobrania,
+    'konkursy':renderKonkursy,'rodzice':renderRodzice,'rada-rodzicow':renderRadaRodzicow,
+    'absolwenci':renderAbsolwenci,'galeria-abs':renderGaleriaAbs,
+    '160-lecie':renderLecie160,'150-lecie':renderLecie150,
+    'kontakt':renderKontakt,'admin':renderAdmin,
+  };
+  const fn=pages[page]||renderHome;
+  fn();
+  setTimeout(()=>{
+    document.querySelectorAll('.fi').forEach(el=>{
+      const io=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}});
+      },{threshold:.1});
+      io.observe(el);
+    });
+  },50);
+}
+
+window.addEventListener('hashchange',()=>{
+  const h=window.location.hash.slice(1)||'home';
+  if(h!==currentPage)navigate(h);
+});
+
+function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('open')}
+
+// ─── SHARED PARTIALS ─────────────────────────────────────────────────────────
+function breadcrumb(items){
+  const crumbs=items.map((it,i)=>{
+    if(i<items.length-1)return `<span data-nav="${it.nav}" onclick="navigate('${it.nav}')" style="cursor:pointer;color:var(--gold)">${it.label}</span>`;
+    return `<span>${it.label}</span>`;
+  }).join(' <span style="color:var(--cream-dark)">›</span> ');
+  return `<div class="breadcrumb"><span data-nav="home" onclick="navigate('home')" style="cursor:pointer;color:var(--gold)">Strona główna</span> <span style="color:var(--cream-dark)">›</span> ${crumbs}</div>`;
+}
+
+function pageHero(eyebrow,title,deco=''){
+  return `<div class="page-hero"><div class="page-hero-bg"></div>
+    <div class="page-hero-eyebrow">${eyebrow}</div>
+    <h1 class="page-hero-title">${title}</h1>
+    ${deco?`<div class="page-hero-deco">${deco}</div>`:''}
+  </div>`;
+}
+
+function footer(){
+  return `<footer>
+    <div class="foot-logo">NORWID © 2026</div>
+    <div class="foot-motto">„Wierni tradycji — odważnie patrzymy w przyszłość"</div>
+    <div class="foot-links">
+      <a onclick="navigate('deklaracja')">Deklaracja dostępności</a>
+      <a onclick="navigate('kontakt')">Kontakt</a>
+    </div>
+  </footer>`;
+}
+
+function arrowSvg(){return`<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`}
+
+// ─── HOME ─────────────────────────────────────────────────────────────────────
+function renderHome(){
+  const posts=getPosts().filter(p=>p.status==='published').slice(0,6);
+  const feat=posts[0];
+  const rest=posts.slice(1,5);
+  document.getElementById('app').innerHTML=`
+    <div class="announce">🎓 Rekrutacja 2026/2027 już otwarta — <a onclick="navigate('rekrutacja')">Sprawdź ofertę edukacyjną</a></div>
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-year">167</div>
+      <div class="ranking-badge">
+        <div class="ranking-text">Ranking</div>
+        <div class="ranking-year">2025</div>
+        <div class="ranking-text" style="color:rgba(255,255,255,.35)">Perspektywy</div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">Nowe Miasto Lubawskie, od 1858 roku</div>
+        <h1 class="hero-title">Liceum<br><em>im. Norwida</em></h1>
+        <p class="hero-sub">Wierni tradycji — odważnie patrzymy w przyszłość</p>
+        <div class="hero-stats">
+          <div><div class="hero-stat-num">600<span>+</span></div><div class="hero-stat-label">Uczniów</div></div>
+          <div class="hero-div"></div>
+          <div><div class="hero-stat-num">45</div><div class="hero-stat-label">Nauczycieli</div></div>
+          <div class="hero-div"></div>
+          <div><div class="hero-stat-num">167</div><div class="hero-stat-label">Lat tradycji</div></div>
+        </div>
+      </div>
+    </section>
+    <section class="quicklinks">
+      <div class="ql-grid">
+        <div class="ql-item" onclick="navigate('sukcesy')"><div class="ql-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><span class="ql-label">Sukcesy</span></div>
+        <div class="ql-item" onclick="navigate('rekrutacja')"><div class="ql-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><span class="ql-label">Rekrutacja 2026</span></div>
+        <div class="ql-item" onclick="navigate('oferta')"><div class="ql-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="ql-label">Oferta edukacyjna</span></div>
+        <div class="ql-item" onclick="navigate('galeria')"><div class="ql-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><span class="ql-label">Galeria</span></div>
+        <div class="ql-item" onclick="navigate('goniec')"><div class="ql-icon"><svg viewBox="0 0 24 24"><path d="M4 22V4l8 4 8-4v18l-8-4-8 4z"/></svg></div><span class="ql-label">Goniec</span></div>
+      </div>
+    </section>
+    <section style="padding:5rem 2.5rem;max-width:1400px;margin:0 auto">
+      <div class="section-header fi">
+        <span class="section-eyebrow">Aktualności</span>
+        <h2 class="section-title">Co u nas słychać</h2>
+        <div class="section-line"></div>
+        <span class="btn-primary" onclick="navigate('aktualnosci')" style="font-size:.7rem">Wszystkie ${arrowSvg()}</span>
+      </div>
+      <div class="news-grid fi">
+        ${feat?`<div class="news-card featured" onclick="navigate('aktualnosci')">
+          <div class="news-card-img-wrap"><img class="news-card-img" src="${feat.img||'https://picsum.photos/seed/n1/800/600'}" alt="" onerror="this.src='https://picsum.photos/seed/n1/800/600'"></div>
+          <div class="news-card-body">
+            <div class="news-date">${formatDate(feat.date)}</div>
+            <h3 class="news-title">${feat.title}</h3>
+            <p style="font-size:.92rem;line-height:1.65;color:var(--text-mid);margin-top:.4rem">${feat.excerpt}</p>
+            <div class="news-arrow">Czytaj więcej ${arrowSvg()}</div>
+          </div>
+        </div>`:''}
+        ${rest.map(p=>`<div class="news-card" onclick="navigate('aktualnosci')">
+          <div class="news-card-img-wrap"><img class="news-card-img" src="${p.img||'https://picsum.photos/seed/'+p.id+'/400/300'}" alt="" onerror="this.src='https://picsum.photos/seed/${p.id}/400/300'"></div>
+          <div class="news-card-body">
+            <div class="news-date">${formatDate(p.date)}</div>
+            <h3 class="news-title">${p.title}</h3>
+            <div class="news-arrow">Czytaj ${arrowSvg()}</div>
+          </div>
+        </div>`).join('')}
+      </div>
+    </section>
+    <section class="section-wrap-dark fi" style="padding:7rem 2.5rem">
+      <div style="max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center">
+        <div>
+          <div class="section-eyebrow" style="margin-bottom:1.5rem">Nasza historia</div>
+          <h2 class="section-title section-title-white" style="margin-bottom:2rem">Jedno z<br><em style="color:var(--gold-light);font-style:italic">najstarszych liceów</em><br>w Polsce</h2>
+          <p class="prose" style="color:rgba(255,255,255,.6)">Szkoła im. Cypriana Kamila Norwida istnieje od 1858 roku. Należy do grona najstarszych placówek oświatowych w Polsce, łącząc ponadstuletnią tradycję z nowoczesnymi metodami kształcenia.</p>
+          <div style="margin-top:2.5rem"><span class="btn-primary" onclick="navigate('historia')">Czytaj więcej ${arrowSvg()}</span></div>
+        </div>
+        <div class="hist-grid fi">
+          <div class="hist-card"><div class="hist-num">167</div><div class="hist-label">Lat istnienia</div></div>
+          <div class="hist-card"><div class="hist-num">600+</div><div class="hist-label">Uczniów</div></div>
+          <div class="hist-card"><div class="hist-num">45</div><div class="hist-label">Pedagogów</div></div>
+          <div class="hist-card"><div class="hist-num">#1</div><div class="hist-label">W regionie</div></div>
+        </div>
+      </div>
+      <div style="position:absolute;right:-1rem;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:28rem;font-weight:700;color:transparent;-webkit-text-stroke:1px rgba(196,151,58,.04);line-height:1;pointer-events:none">1858</div>
+    </section>
+    ${footer()}`;
+}
+
+// ─── AKTUALNOŚCI ──────────────────────────────────────────────────────────────
+function renderAktualnosci(){
+  const posts=getPosts().filter(p=>p.status==='published');
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Aktualności','Najnowsze<br><em>wydarzenia</em>','NEWS')}
+    ${breadcrumb([{label:'Aktualności',nav:'aktualnosci'}])}
+    <div class="section-wrap">
+      <div class="news-list fi">
+        ${posts.map(p=>`<div class="news-list-item fi" onclick="navigate('aktualnosci')">
+          <img src="${p.img||'https://picsum.photos/seed/'+p.id+'/400/300'}" alt="" onerror="this.src='https://picsum.photos/seed/${p.id}/400/300'">
+          <div class="news-list-body">
+            <div class="news-date">${formatDate(p.date)}</div>
+            <div style="display:inline-block;padding:.2rem .6rem;background:var(--cream-dark);font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-mid);margin-bottom:.4rem">${p.category||'Aktualności'}</div>
+            <h3 class="news-title" style="font-size:1.1rem;font-weight:600">${p.title}</h3>
+            <p style="font-size:.88rem;line-height:1.65;color:var(--text-mid);margin-top:.4rem">${p.excerpt}</p>
+            <div class="news-arrow" style="margin-top:auto;padding-top:.8rem">Czytaj więcej ${arrowSvg()}</div>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── O SZKOLE ─────────────────────────────────────────────────────────────────
+function renderOSzkole(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('O szkole','Liceum<br><em>im. Norwida</em>','LO')}
+    ${breadcrumb([{label:'O szkole',nav:'o-szkole'}])}
+    <div class="section-wrap">
+      <div class="two-col fi">
+        <div>
+          <div class="section-header"><span class="section-eyebrow">Informacje ogólne</span></div>
+          <div class="prose">
+            <p>Liceum Ogólnokształcące im. Cypriana Kamila Norwida w Nowym Mieście Lubawskim to jedna z najstarszych szkół w Polsce, istniejąca od 1858 roku. Szkoła funkcjonuje w ramach Zespołu Szkół i kształci młodzież na najwyższym poziomie.</p>
+            <p>Misją szkoły jest wszechstronny rozwój uczniów, budowanie postaw obywatelskich, rozwijanie talentów oraz przygotowanie do życia w dynamicznie zmieniającym się świecie.</p>
+            <p>Szkoła osiąga doskonałe wyniki maturalne i aktywnie uczestniczy w olimpiadach i konkursach przedmiotowych na szczeblu regionalnym i krajowym.</p>
+          </div>
+          <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap">
+            <span class="btn-primary" onclick="navigate('historia')">Historia szkoły ${arrowSvg()}</span>
+            <span class="btn-primary btn-navy" onclick="navigate('kadra')">Kadra pedagogiczna ${arrowSvg()}</span>
+          </div>
+        </div>
+        <div>
+          <div class="info-block"><div class="info-block-title">Dyrektor szkoły</div><div class="info-block-val">mgr Anna Kowalska</div></div>
+          <div class="info-block"><div class="info-block-title">Rok założenia</div><div class="info-block-val">1858</div></div>
+          <div class="info-block"><div class="info-block-title">Liczba uczniów</div><div class="info-block-val">ponad 600</div></div>
+          <div class="info-block"><div class="info-block-title">Liczba nauczycieli</div><div class="info-block-val">45 pedagogów</div></div>
+          <div class="info-block"><div class="info-block-title">Adres</div><div class="info-block-val">ul. 3 Maja 24, 13-300 Nowe Miasto Lubawskie</div></div>
+        </div>
+      </div>
+      <div class="three-col fi" style="margin-top:4rem">
+        <div class="card" onclick="navigate('patron')" style="cursor:pointer"><div class="card-title">Patron</div><div class="card-text">Cyprian Kamil Norwid — poeta, dramaturg, prozaik, rzeźbiarz i rysownik okresu romantyzmu.</div></div>
+        <div class="card" onclick="navigate('sukcesy')" style="cursor:pointer"><div class="card-title">Sukcesy</div><div class="card-text">Laureaci olimpiad, zdobywcy nagród w konkursach regionalnych i ogólnopolskich.</div></div>
+        <div class="card" onclick="navigate('galeria')" style="cursor:pointer"><div class="card-title">Galeria</div><div class="card-text">Fotografie dokumentujące życie szkoły — uroczystości, wycieczki, projekty i akademie.</div></div>
+        <div class="card" onclick="navigate('goniec')" style="cursor:pointer"><div class="card-title">Goniec Nowomiejski</div><div class="card-text">Szkolna gazeta wydawana przez uczniów — kronika wydarzeń, wywiady, felietony.</div></div>
+        <div class="card" onclick="navigate('wspolpraca')" style="cursor:pointer"><div class="card-title">Współpraca</div><div class="card-text">Partnerstwa z uczelniami, firmami i instytucjami wspierającymi edukację uczniów.</div></div>
+        <div class="card" onclick="navigate('rankingi')" style="cursor:pointer"><div class="card-title">Rankingi</div><div class="card-text">Brązowa szkoła w rankingu Perspektyw 2025 — najlepsze licea woj. warmińsko-mazurskiego.</div></div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── PATRON ───────────────────────────────────────────────────────────────────
+function renderPatron(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Patron','Cyprian Kamil<br><em>Norwid</em>','CKN')}
+    ${breadcrumb([{label:'O szkole',nav:'o-szkole'},{label:'Patron',nav:'patron'}])}
+    <div class="section-wrap">
+      <div class="two-col fi">
+        <div class="prose">
+          <h3>Życie i twórczość</h3>
+          <p>Cyprian Kamil Norwid (1821–1883) — jeden z czterech wielkich poetów polskiego romantyzmu. Urodził się w Laskowie-Głuchach koło Radzymina. Był poetą, dramaturgiem, prozaikiem, rzeźbiarzem i rysownikiem.</p>
+          <p>Twórczość Norwida, niedoceniana za jego życia, zyskała należne miejsce w polskiej literaturze dopiero w XX wieku. Jego poezja wyróżnia się filozoficzną głębią, oryginalnym językiem i nowatorską formą.</p>
+          <h3>Wybrane dzieła</h3>
+          <ul>
+            <li><em>Promethidion</em> — traktat poetycki o sztuce i pracy</li>
+            <li><em>Vade-mecum</em> — zbiór liryków, opus magnum poety</li>
+            <li><em>Quidam</em> — poemat narracyjny</li>
+            <li><em>Pierścień Wielkiej Damy</em> — dramat</li>
+          </ul>
+          <h3>Patron naszej szkoły</h3>
+          <p>Imię Cypriana Kamila Norwida szkoła nosi z dumą jako wyraz hołdu dla wielkiego polskiego twórcy i humanisty. Wartości, które wyznawał — pracę, piękno, prawdę i wolność — stanowią fundament wychowawczy placówki.</p>
+        </div>
+        <div>
+          <div style="background:var(--navy);padding:3rem;color:rgba(255,255,255,.8);font-family:var(--serif);font-size:1.4rem;font-weight:300;line-height:1.8;font-style:italic;border-left:3px solid var(--gold)">
+            „Bo piękno na to jest, by zachwycało<br>do pracy — praca, by się zmartwychwstało."
+            <div style="font-size:.8rem;font-weight:600;font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-top:1.5rem">— C.K. Norwid, Promethidion</div>
+          </div>
+          <div style="margin-top:2px;background:var(--cream);padding:2rem">
+            <div class="info-block-title">Urodził się</div>
+            <div class="info-block-val">24 września 1821</div>
+          </div>
+          <div style="margin-top:2px;background:var(--cream);padding:2rem">
+            <div class="info-block-title">Zmarł</div>
+            <div class="info-block-val">23 maja 1883, Paryż</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── HISTORIA ─────────────────────────────────────────────────────────────────
+function renderHistoria(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Historia','167 lat<br><em>tradycji i historii</em>','1858')}
+    ${breadcrumb([{label:'O szkole',nav:'o-szkole'},{label:'Historia',nav:'historia'}])}
+    <div class="section-wrap">
+      <div class="two-col fi" style="margin-bottom:4rem">
+        <div>
+          <div class="section-header"><span class="section-eyebrow">Rys historyczny</span><h2 class="section-title">Od 1858 roku</h2></div>
+          <div class="prose">
+            <p>Historia szkoły sięga roku 1858, kiedy to w Nowym Mieście Lubawskim założono placówkę edukacyjną, która przez ponad 167 lat służy lokalnej społeczności.</p>
+            <p>Szkoła przetrwała burzliwe czasy zaborów, dwie wojny światowe i przemiany ustrojowe, niezmiennie pełniąc misję kształcenia i wychowania młodego pokolenia.</p>
+            <p>W 2023 roku szkoła obchodziła jubileusz 165-lecia istnienia, który był okazją do świętowania i spotkania absolwentów z kilku pokoleń.</p>
+          </div>
+        </div>
+        <div>
+          <div class="hist-grid">
+            <div class="hist-card" style="background:var(--cream);border:1px solid var(--cream-dark)"><div class="hist-num" style="color:var(--navy)">1858</div><div class="hist-label" style="color:var(--text-light)">Rok założenia</div></div>
+            <div class="hist-card" style="background:var(--cream);border:1px solid var(--cream-dark)"><div class="hist-num" style="color:var(--navy)">167</div><div class="hist-label" style="color:var(--text-light)">Lat działalności</div></div>
+            <div class="hist-card" style="background:var(--cream);border:1px solid var(--cream-dark)"><div class="hist-num" style="color:var(--navy)">1000+</div><div class="hist-label" style="color:var(--text-light)">Absolwentów</div></div>
+            <div class="hist-card" style="background:var(--cream);border:1px solid var(--cream-dark)"><div class="hist-num" style="color:var(--navy)">#1</div><div class="hist-label" style="color:var(--text-light)">W regionie</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="fi">
+        <div class="section-header"><span class="section-eyebrow">Kronika</span><h2 class="section-title">Ważne daty</h2><div class="section-line"></div></div>
+        <div class="timeline">
+          ${[
+            {y:'1858',t:'Założenie szkoły',d:'Otwarcie placówki edukacyjnej w Nowym Mieście Lubawskim.'},
+            {y:'1920',t:'Okres międzywojenny',d:'Szkoła wznawia działalność po odzyskaniu przez Polskę niepodległości.'},
+            {y:'1945',t:'Powojenna odbudowa',d:'Wznowienie nauczania po zakończeniu II wojny światowej.'},
+            {y:'2001',t:'Nowa siedziba',d:'Szkoła przenosi się do nowoczesnego budynku przy ul. 3 Maja.'},
+            {y:'2021',t:'Rok Norwidowski',d:'Obchody roku patrona szkoły — Cypriana Kamila Norwida.'},
+            {y:'2023',t:'Jubileusz 165-lecia',d:'Uroczyste obchody 165. rocznicy założenia szkoły z udziałem absolwentów.'},
+          ].map(it=>`<div class="tl-item"><div class="tl-dot"></div><div class="tl-year">${it.y}</div><div class="tl-title">${it.t}</div><div class="tl-text">${it.d}</div></div>`).join('')}
+        </div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── KADRA ────────────────────────────────────────────────────────────────────
+function renderKadra(){
+  const kadra=[
+    {name:'mgr Anna Kowalska',role:'Dyrektor',sub:'Matematyka'},
+    {name:'mgr Piotr Nowak',role:'Wicedyrektor',sub:'Język polski'},
+    {name:'mgr Ewa Wiśniewska',role:'Nauczyciel',sub:'Biologia, Chemia'},
+    {name:'mgr Tomasz Zieliński',role:'Nauczyciel',sub:'Historia, WOS'},
+    {name:'mgr Katarzyna Wróbel',role:'Nauczyciel',sub:'Język angielski'},
+    {name:'mgr Michał Kowal',role:'Nauczyciel',sub:'Fizyka, Informatyka'},
+    {name:'mgr Agnieszka Lis',role:'Nauczyciel',sub:'Język polski'},
+    {name:'mgr Rafał Dąbrowski',role:'Nauczyciel',sub:'Matematyka'},
+    {name:'mgr Joanna Maj',role:'Pedagog szkolny',sub:'Wsparcie uczniów'},
+    {name:'mgr Barbara Szymańska',role:'Psycholog',sub:'Wsparcie psychologiczne'},
+    {name:'mgr Paweł Kubiak',role:'Doradca zawodowy',sub:'Planowanie kariery'},
+    {name:'mgr Monika Pawlak',role:'Nauczyciel',sub:'Język niemiecki'},
+  ];
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Kadra pedagogiczna','Nasz<br><em>zespół</em>')}
+    ${breadcrumb([{label:'O szkole',nav:'o-szkole'},{label:'Kadra',nav:'kadra'}])}
+    <div class="section-wrap">
+      <div class="team-grid fi">
+        ${kadra.map(k=>{
+          const initials=k.name.replace('mgr ','').split(' ').map(w=>w[0]).join('').slice(0,2);
+          return`<div class="team-card">
+            <div class="team-avatar">${initials}</div>
+            <div class="team-name">${k.name}</div>
+            <div class="team-role">${k.role}</div>
+            <div class="team-subject">${k.sub}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── DOKUMENTY ───────────────────────────────────────────────────────────────
+function renderDokumenty(){
+  const docs=[
+    {name:'Statut Szkoły 2025/2026',size:'1.2 MB'},
+    {name:'Program Wychowawczo-Profilaktyczny',size:'890 KB'},
+    {name:'Regulamin oceniania',size:'654 KB'},
+    {name:'Plan Pracy Szkoły',size:'1.1 MB'},
+    {name:'Klauzula informacyjna RODO',size:'420 KB'},
+    {name:'Regulamin użytkowania szafek',size:'210 KB'},
+    {name:'Zasady korzystania z biblioteki',size:'180 KB'},
+  ];
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Dokumenty','Dokumenty<br><em>szkolne</em>')}
+    ${breadcrumb([{label:'O szkole',nav:'o-szkole'},{label:'Dokumenty',nav:'dokumenty'}])}
+    <div class="section-wrap">
+      <div class="doc-list fi">
+        ${docs.map(d=>`<div class="doc-item">
+          <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
+          <div class="doc-name">${d.name}</div>
+          <div class="doc-size">${d.size}</div>
+          <a class="doc-dl" href="#">Pobierz ↓</a>
+        </div>`).join('')}
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── SUKCESY ──────────────────────────────────────────────────────────────────
+function renderSukcesy(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Sukcesy','Nasze<br><em>osiągnięcia</em>','★')}
+    ${breadcrumb([{label:'O szkole',nav:'o-szkole'},{label:'Sukcesy',nav:'sukcesy'}])}
+    <div class="section-wrap">
+      <div class="three-col fi" style="margin-bottom:4rem">
+        ${[
+          {n:'47',l:'Laureatów olimpiad',sub:'W roku szkolnym 2024/2025'},
+          {n:'12',l:'Nagród ogólnopolskich',sub:'W konkursach i turniejach'},
+          {n:'98%',l:'Zdawalność matury',sub:'Powyżej średniej krajowej'},
+        ].map(s=>`<div style="background:var(--cream);padding:3rem;border-left:3px solid var(--gold)">
+          <div style="font-family:var(--serif);font-size:3.5rem;font-weight:600;color:var(--text-dark);line-height:1">${s.n}</div>
+          <div style="font-family:var(--serif);font-size:1.2rem;font-weight:600;margin:.5rem 0 .25rem">${s.l}</div>
+          <div style="font-size:.82rem;color:var(--text-light)">${s.sub}</div>
+        </div>`).join('')}
+      </div>
+      <div class="fi">
+        <table>
+          <thead><tr><th>Uczeń / Uczniowie</th><th>Konkurs / Olimpiada</th><th>Miejsce</th><th>Rok</th></tr></thead>
+          <tbody>
+            ${[
+              ['Jan Kowalski','Olimpiada Matematyczna','Finalista','2026'],
+              ['Anna Nowak','Olimpiada Językoznawcza','I miejsce — etap regionalny','2026'],
+              ['Klasa 3A','Turniej Wiedzy Pożarniczej','III miejsce ogólnopolskie','2026'],
+              ['Marta Wiśniewska','Konkurs Recytatorski','I miejsce','2025'],
+              ['Piotr Zieliński','Olimpiada z Fizyki','Laureat — etap okręgowy','2025'],
+            ].map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── RANKINGI ─────────────────────────────────────────────────────────────────
+function renderRankingi(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Rankingi i osiągnięcia','Pozycja w<br><em>rankingach</em>')}
+    ${breadcrumb([{label:'O szkole',nav:'o-szkole'},{label:'Rankingi',nav:'rankingi'}])}
+    <div class="section-wrap">
+      <div class="two-col fi">
+        <div>
+          <div class="section-header"><span class="section-eyebrow">Perspektywy 2025</span><h2 class="section-title">Brązowa szkoła</h2></div>
+          <div class="prose"><p>W Rankingu Liceów Ogólnokształcących Perspektywy 2025, LO im. Norwida zajmuje pozycję <strong>Brązowej Szkoły</strong> w województwie warmińsko-mazurskim, co potwierdza wysoki poziom nauczania i osiągnięcia uczniów.</p>
+          <p>Ranking uwzględnia m.in. wyniki maturalne, sukcesy w olimpiadach i konkursach oraz aktywność uczniów na polu naukowym i kulturalnym.</p></div>
+        </div>
+        <div style="background:var(--navy);padding:3rem;text-align:center">
+          <div style="font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem">Ranking Perspektywy</div>
+          <div style="font-family:var(--serif);font-size:5rem;font-weight:700;color:var(--gold-light);line-height:1">🥉</div>
+          <div style="font-family:var(--serif);font-size:1.5rem;font-weight:600;color:#fff;margin-top:1rem">Brązowa Szkoła</div>
+          <div style="font-size:.82rem;color:rgba(255,255,255,.4);margin-top:.5rem">woj. warmińsko-mazurskie 2025</div>
+        </div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── GALERIA ──────────────────────────────────────────────────────────────────
+function renderGaleria(){
+  const items=getGallery();
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Galeria','Fotografie<br><em>ze szkoły</em>')}
+    ${breadcrumb([{label:'O szkole',nav:'o-szkole'},{label:'Galeria',nav:'galeria'}])}
+    <div class="section-wrap">
+      <div class="gallery-grid fi">
+        ${items.map(g=>`<div class="gallery-item" onclick="openLightbox('${g.img}')">
+          <img src="${g.img}" alt="${g.title}" onerror="this.src='https://picsum.photos/seed/gal${g.id}/400/400'">
+        </div>`).join('')}
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── GONIEC ───────────────────────────────────────────────────────────────────
+function renderGoniec(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Goniec Nowomiejski','Szkolna<br><em>gazeta</em>')}
+    ${breadcrumb([{label:'O szkole',nav:'o-szkole'},{label:'Goniec Nowomiejski',nav:'goniec'}])}
+    <div class="section-wrap">
+      <div class="two-col fi">
+        <div class="prose">
+          <p>Goniec Nowomiejski to szkolna gazeta wydawana przez uczniów LO im. Norwida. Publikuje artykuły, wywiady, reportaże i felietony poświęcone życiu szkolnemu i lokalnym wydarzeniom.</p>
+          <p>Gazeta ukazuje się regularnie i stanowi platformę dla uczniów zainteresowanych dziennikarstwem, fotografią i twórczością literacką.</p>
+          <p>Opiekunem redakcji jest nauczyciel języka polskiego. Artykuły przygotowują uczniowie z różnych klas pod redakcją kolegium wydawniczego.</p>
+        </div>
+        <div>
+          <div class="section-header" style="margin-bottom:1.5rem"><span class="section-eyebrow">Najnowsze numery</span></div>
+          ${['Nr 12 — Marzec 2026','Nr 11 — Styczeń 2026','Nr 10 — Grudzień 2025'].map(n=>`<div class="doc-item">
+            <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M4 22V4l8 4 8-4v18l-8-4-8 4z"/></svg></div>
+            <div class="doc-name">${n}</div>
+            <a class="doc-dl" href="#">Czytaj →</a>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── WSPÓŁPRACA ───────────────────────────────────────────────────────────────
+function renderWspolpraca(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Współpraca','Partnerzy<br><em>i współpraca</em>')}
+    ${breadcrumb([{label:'O szkole',nav:'o-szkole'},{label:'Współpraca',nav:'wspolpraca'}])}
+    <div class="section-wrap">
+      <div class="prose fi" style="max-width:800px;margin-bottom:3rem">
+        <p>Szkoła aktywnie współpracuje z uczelniami wyższymi, instytucjami kultury, firmami lokalnymi oraz organizacjami pozarządowymi w celu wzbogacenia oferty edukacyjnej i zwiększenia szans uczniów.</p>
+      </div>
+      <div class="three-col fi">
+        ${[
+          {t:'Uczelnie wyższe',d:'Współpraca z Uniwersytetem Warmińsko-Mazurskim w zakresie kół naukowych i olimpiad.'},
+          {t:'Firmy lokalne',d:'Staże i warsztaty zawodowe dla uczniów klas maturalnych i profili biznesowych.'},
+          {t:'Samorząd lokalny',d:'Wspólne projekty edukacyjne finansowane z budżetu miasta i powiatu.'},
+          {t:'Szkoły zagraniczne',d:'Wymiana uczniów i nauczycieli w ramach programu Erasmus+.'},
+          {t:'Instytucje kultury',d:'Współpraca z lokalnym muzeum, biblioteką i domem kultury.'},
+          {t:'ZUS i instytucje publiczne',d:'Projekty edukacyjne dotyczące finansów, prawa i ubezpieczeń społecznych.'},
+        ].map(c=>`<div class="card"><div class="card-title">${c.t}</div><div class="card-text">${c.d}</div></div>`).join('')}
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── KANDYDACI ────────────────────────────────────────────────────────────────
+function renderKandydaci(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Kandydaci','Dołącz do<br><em>naszej szkoły</em>')}
+    ${breadcrumb([{label:'Kandydaci',nav:'kandydaci'}])}
+    <div class="section-wrap">
+      <div class="two-col fi">
+        <div>
+          <div class="prose">
+            <p>Zapraszamy wszystkich absolwentów szkół podstawowych do zapoznania się z ofertą edukacyjną LO im. Norwida. Oferujemy różnorodne profile klas dopasowane do zainteresowań i planów zawodowych przyszłych uczniów.</p>
+            <p>Szkoła zapewnia wysoki poziom nauczania, wykwalifikowaną kadrę pedagogiczną, nowoczesne wyposażenie pracowni oraz szeroką ofertę zajęć pozalekcyjnych.</p>
+          </div>
+          <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap">
+            <span class="btn-primary" onclick="navigate('oferta')">Oferta edukacyjna ${arrowSvg()}</span>
+            <span class="btn-primary btn-navy" onclick="navigate('rekrutacja')">Rekrutacja 2026/2027 ${arrowSvg()}</span>
+          </div>
+        </div>
+        <div>
+          <div class="info-block"><div class="info-block-title">Rok rekrutacji</div><div class="info-block-val">2026/2027</div></div>
+          <div class="info-block"><div class="info-block-title">Liczba miejsc</div><div class="info-block-val">ok. 180 miejsc w 5 klasach</div></div>
+          <div class="info-block"><div class="info-block-title">Wymagane dokumenty</div><div class="info-block-val">Świadectwo, zaświadczenie o wynikach egzaminu</div></div>
+          <div class="info-block"><div class="info-block-title">System rekrutacji</div><div class="info-block-val">Nabór elektroniczny — ORE/Vulcan</div></div>
+        </div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── OFERTA ───────────────────────────────────────────────────────────────────
+function renderOferta(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Oferta edukacyjna','Profile<br><em>nauczania</em>')}
+    ${breadcrumb([{label:'Kandydaci',nav:'kandydaci'},{label:'Oferta edukacyjna',nav:'oferta'}])}
+    <div class="section-wrap">
+      <div class="fi" style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:3rem">
+        ${[
+          {l:'Klasa A',p:'Humanistyczno-językowa',r:'Język polski, Historia, J. Angielski',d:'Dla uczniów zainteresowanych humanistyką, dziennikarstwem, filologią i naukami społecznymi.'},
+          {l:'Klasa B',p:'Matematyczno-fizyczna',r:'Matematyka rozszerzona, Fizyka, Informatyka',d:'Dla przyszłych inżynierów, informatyków i kandydatów na kierunki ścisłe.'},
+          {l:'Klasa C',p:'Biologiczno-chemiczna',r:'Biologia rozszerzona, Chemia, Matematyka',d:'Dla kandydatów na medycynę, farmację, biologię i pokrewne kierunki przyrodnicze.'},
+          {l:'Klasa D',p:'Społeczno-prawna',r:'WOS rozszerzony, Historia, J. Angielski',d:'Dla przyszłych prawników, politologów i kandydatów na studia ekonomiczno-społeczne.'},
+          {l:'Klasa E',p:'Ogólna (sport)',r:'WF rozszerzony, Biologia, Matematyka',d:'Profil z rozszerzonym wychowaniem fizycznym dla uczniów aktywnych sportowo.'},
+        ].map(k=>`<div style="background:var(--cream);padding:2.5rem;border-left:3px solid var(--gold)">
+          <div style="font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem">${k.l}</div>
+          <div style="font-family:var(--serif);font-size:1.3rem;font-weight:600;margin-bottom:.5rem">${k.p}</div>
+          <div style="font-size:.8rem;font-weight:600;letter-spacing:.04em;color:var(--text-light);margin-bottom:.8rem">Rozszerzenia: ${k.r}</div>
+          <div style="font-size:.9rem;line-height:1.65;color:var(--text-mid)">${k.d}</div>
+        </div>`).join('')}
+      </div>
+      <div class="fi" style="text-align:center">
+        <span class="btn-primary btn-navy" onclick="navigate('rekrutacja')">Sprawdź rekrutację ${arrowSvg()}</span>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── REKRUTACJA ───────────────────────────────────────────────────────────────
+function renderRekrutacja(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Rekrutacja','Rekrutacja<br><em>2026 / 2027</em>')}
+    ${breadcrumb([{label:'Kandydaci',nav:'kandydaci'},{label:'Rekrutacja',nav:'rekrutacja'}])}
+    <div class="section-wrap">
+      <div class="two-col fi">
+        <div>
+          <div class="section-header"><span class="section-eyebrow">Harmonogram</span><h2 class="section-title">Terminy rekrutacji</h2></div>
+          <div class="timeline">
+            ${[
+              {y:'Maj 2026',t:'Złożenie wniosku',d:'Elektroniczne złożenie wniosku o przyjęcie do szkoły przez system Vulcan.'},
+              {y:'Czerwiec 2026',t:'Uzupełnienie dokumentów',d:'Dostarczenie kopii świadectwa i zaświadczenia o wynikach egzaminu.'},
+              {y:'Lipiec 2026',t:'Ogłoszenie list kandydatów',d:'Publikacja list kandydatów zakwalifikowanych do przyjęcia.'},
+              {y:'Sierpień 2026',t:'Potwierdzenie przyjęcia',d:'Złożenie oryginałów dokumentów i potwierdzenie woli podjęcia nauki.'},
+            ].map(it=>`<div class="tl-item"><div class="tl-dot"></div><div class="tl-year">${it.y}</div><div class="tl-title">${it.t}</div><div class="tl-text">${it.d}</div></div>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="info-block" style="background:var(--navy);padding:2rem">
+            <div class="info-block-title" style="color:var(--gold)">Kontakt rekrutacyjny</div>
+            <div class="info-block-val" style="color:#fff">sekretariat@norwid.eu</div>
+            <div style="margin-top:.5rem;font-size:.85rem;color:rgba(255,255,255,.5)">(56) 472-60-20</div>
+          </div>
+          <div class="accordion-item fi" style="margin-top:2rem">
+            <div class="accordion-head" onclick="toggleAcc(this)">Jakie dokumenty są potrzebne? <svg class="acc-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            <div class="accordion-body">Wniosek o przyjęcie, kopia świadectwa szkoły podstawowej, zaświadczenie o wynikach egzaminu ósmoklasisty, zdjęcia legitymacyjne.</div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-head" onclick="toggleAcc(this)">Jak wygląda system punktowy? <svg class="acc-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            <div class="accordion-body">Punkty za wyniki egzaminu (max 100 pkt), oceny na świadectwie ze wskazanych przedmiotów (max 72 pkt), szczególne osiągnięcia (max 18 pkt). Łącznie max 190 pkt.</div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-head" onclick="toggleAcc(this)">Czy organizowane są dni otwarte? <svg class="acc-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            <div class="accordion-body">Tak, Dzień Otwarty Szkoły odbywa się w marcu każdego roku. Zapraszamy kandydatów i rodziców do zwiedzania szkoły i rozmów z nauczycielami.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── UCZNIOWIE ────────────────────────────────────────────────────────────────
+function renderUczniowie(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Uczniowie','Strefa<br><em>ucznia</em>')}
+    ${breadcrumb([{label:'Uczniowie',nav:'uczniowie'}])}
+    <div class="section-wrap">
+      <div class="three-col fi">
+        ${[
+          {n:'Samorząd uczniowski',d:'Reprezentacja uczniów, organizacja wydarzeń szkolnych i opieka nad prawami ucznia.',nav:'samorzad'},
+          {n:'Doradca zawodowy',d:'Pomoc w wyborze kierunku studiów i planowaniu kariery zawodowej.',nav:'doradca'},
+          {n:'Pedagog szkolny',d:'Wsparcie wychowawcze i pomoc w rozwiązywaniu problemów szkolnych.',nav:'pedagog'},
+          {n:'Psycholog szkolny',d:'Opieka psychologiczna i wsparcie w trudnych sytuacjach życiowych.',nav:'psycholog'},
+          {n:'Podręczniki',d:'Lista podręczników obowiązujących w danym roku szkolnym dla poszczególnych klas.',nav:'podreczniki'},
+          {n:'Konkursy',d:'Aktualne konkursy i olimpiady przedmiotowe, w których mogą uczestniczyć uczniowie.',nav:'konkursy'},
+        ].map(c=>`<div class="card" onclick="navigate('${c.nav}')" style="cursor:pointer"><div class="card-title">${c.n}</div><div class="card-text">${c.d}</div></div>`).join('')}
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── SAMORZĄD ─────────────────────────────────────────────────────────────────
+function renderSamorzad(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Samorząd uczniowski','Głos<br><em>uczniów</em>')}
+    ${breadcrumb([{label:'Uczniowie',nav:'uczniowie'},{label:'Samorząd',nav:'samorzad'}])}
+    <div class="section-wrap">
+      <div class="two-col fi">
+        <div class="prose">
+          <p>Samorząd Uczniowski jest demokratyczną reprezentacją wszystkich uczniów szkoły. Działamy na rzecz poprawy warunków nauki i życia szkolnego, organizujemy wydarzenia kulturalne i integracyjne.</p>
+          <h3>Działalność SU</h3>
+          <ul>
+            <li>Organizacja dyskotek i imprez szkolnych</li>
+            <li>Akcje charytatywne i wolontariat</li>
+            <li>Reprezentowanie uczniów wobec dyrekcji</li>
+            <li>Wydawanie gazety szkolnej Goniec Nowomiejski</li>
+          </ul>
+        </div>
+        <div>
+          <div style="background:var(--navy);padding:2.5rem;color:rgba(255,255,255,.8)">
+            <div style="font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem">Zarząd SU 2025/2026</div>
+            ${[['Przewodniczący','Jakub Malinowski'],['Zastępca','Zofia Kamińska'],['Sekretarz','Aleksander Nowak']].map(([r,n])=>`<div style="display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.06)"><span style="color:rgba(255,255,255,.4);font-size:.85rem">${r}</span><span style="font-family:var(--serif)">${n}</span></div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── DORADCA ──────────────────────────────────────────────────────────────────
+function renderDoradca(){
+  return renderSpecjalist('Doradca zawodowy','Planowanie<br><em>kariery</em>','doradca','Mgr Paweł Kubiak','Doradca zawodowy','kubiak@norwid.eu','poniedziałek 10:00–14:00, środa 12:00–16:00','Oferuję indywidualne konsultacje dotyczące wyboru kierunku studiów i planowania kariery zawodowej. Pomagam w odkryciu mocnych stron i zainteresowań ucznia oraz dopasuję je do realiów rynku pracy.','uczniowie');
+}
+function renderPedagog(){
+  return renderSpecjalist('Pedagog szkolny','Wsparcie<br><em>wychowawcze</em>','pedagog','Mgr Joanna Maj','Pedagog szkolny','maj@norwid.eu','wtorek 9:00–13:00, czwartek 11:00–15:00','Wspieram uczniów w rozwiązywaniu problemów szkolnych i osobistych, współpracuję z rodzicami i nauczycielami. Prowadzę również mediacje i interwencje w sytuacjach konfliktowych.','uczniowie');
+}
+function renderPsycholog(){
+  return renderSpecjalist('Psycholog szkolny','Wsparcie<br><em>psychologiczne</em>','psycholog','Mgr Barbara Szymańska','Psycholog szkolny','szymanska@norwid.eu','poniedziałek 8:00–12:00, piątek 10:00–14:00','Oferuję pomoc psychologiczną uczniom przeżywającym trudności emocjonalne, stres szkolny, problemy w relacjach rówieśniczych. Wszystkie rozmowy objęte są zasadą poufności.','uczniowie');
+}
+
+function renderSpecjalist(eyebrow,title,page,name,role,email,hours,desc,parentNav){
+  document.getElementById('app').innerHTML=`
+    ${pageHero(eyebrow,title)}
+    ${breadcrumb([{label:'Uczniowie',nav:parentNav},{label:eyebrow,nav:page}])}
+    <div class="section-wrap">
+      <div class="two-col fi">
+        <div class="prose"><p>${desc}</p></div>
+        <div>
+          <div style="background:var(--navy);padding:2.5rem">
+            <div class="team-avatar" style="margin:0 0 1.5rem">${name.split(' ').pop()[0]}</div>
+            <div style="font-family:var(--serif);font-size:1.3rem;font-weight:600;color:#fff">${name}</div>
+            <div style="font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-top:.3rem">${role}</div>
+            <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.8rem">
+              <div><div style="font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.2rem">E-mail</div><div style="color:rgba(255,255,255,.7);font-family:var(--serif)">${email}</div></div>
+              <div><div style="font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.2rem">Godziny przyjęć</div><div style="color:rgba(255,255,255,.7);font-size:.9rem">${hours}</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── PODRĘCZNIKI ──────────────────────────────────────────────────────────────
+function renderPodreczniki(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Podręczniki','Lista<br><em>podręczników</em>')}
+    ${breadcrumb([{label:'Uczniowie',nav:'uczniowie'},{label:'Podręczniki',nav:'podreczniki'}])}
+    <div class="section-wrap">
+      <div class="fi">
+        ${['Klasa I','Klasa II','Klasa III'].map(kl=>`<div style="margin-bottom:3rem">
+          <h3 style="font-family:var(--serif);font-size:1.4rem;font-weight:600;margin-bottom:1rem;color:var(--text-dark)">${kl}</h3>
+          <table>
+            <thead><tr><th>Przedmiot</th><th>Tytuł podręcznika</th><th>Wydawnictwo</th><th>ISBN</th></tr></thead>
+            <tbody>
+              ${[['Język polski','Oblicza epok 1','WSiP','978-83-02-19001-4'],['Matematyka','Matematyka 1 — zakres podstawowy','Nowa Era','978-83-267-2345-6'],['Historia','Historia 1','Nowa Era','978-83-267-1234-5'],['Biologia','Biologia na czasie 1','Nowa Era','978-83-267-3456-7']].map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`).join('')}
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── DO POBRANIA ──────────────────────────────────────────────────────────────
+function renderDoPobrania(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Do pobrania','Materiały<br><em>do pobrania</em>')}
+    ${breadcrumb([{label:'Uczniowie',nav:'uczniowie'},{label:'Do pobrania',nav:'do-pobrania-ucz'}])}
+    <div class="section-wrap">
+      <div class="doc-list fi">
+        ${['Wniosek o usprawiedliwienie nieobecności','Podanie o zwolnienie z lekcji WF','Wniosek o wydanie duplikatu świadectwa','Formularz zgody na wycieczkę szkolną','Wniosek o zasiłek szkolny','Zgoda rodzica na przetwarzanie danych'].map(n=>`<div class="doc-item">
+          <div class="doc-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
+          <div class="doc-name">${n}</div>
+          <a class="doc-dl" href="#">Pobierz ↓</a>
+        </div>`).join('')}
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── KONKURSY ─────────────────────────────────────────────────────────────────
+function renderKonkursy(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Konkursy','Olimpiady<br><em>i konkursy</em>')}
+    ${breadcrumb([{label:'Uczniowie',nav:'uczniowie'},{label:'Konkursy',nav:'konkursy'}])}
+    <div class="section-wrap">
+      <div class="fi">
+        <table>
+          <thead><tr><th>Konkurs / Olimpiada</th><th>Przedmiot</th><th>Termin zgłoszeń</th><th>Opiekun</th></tr></thead>
+          <tbody>
+            ${[
+              ['Olimpiada Matematyczna','Matematyka','15 września 2026','mgr R. Dąbrowski'],
+              ['Olimpiada Języka Angielskiego','J. Angielski','30 września 2026','mgr K. Wróbel'],
+              ['Olimpiada Fizyczna','Fizyka','1 października 2026','mgr M. Kowal'],
+              ['Konkurs Historyczny','Historia','15 października 2026','mgr T. Zieliński'],
+              ['Olimpiada Biologiczna','Biologia','20 października 2026','mgr E. Wiśniewska'],
+            ].map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── RODZICE ──────────────────────────────────────────────────────────────────
+function renderRodzice(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Rodzice','Strefa<br><em>rodzica</em>')}
+    ${breadcrumb([{label:'Rodzice',nav:'rodzice'}])}
+    <div class="section-wrap">
+      <div class="three-col fi">
+        <div class="card" onclick="navigate('rada-rodzicow')" style="cursor:pointer"><div class="card-title">Rada Rodziców</div><div class="card-text">Organ wspierający działalność szkoły w zakresie wychowania i kształcenia dzieci.</div></div>
+        <div class="card" onclick="navigate('do-pobrania-rod')" style="cursor:pointer"><div class="card-title">Do pobrania</div><div class="card-text">Formularze i dokumenty dla rodziców uczniów liceum.</div></div>
+        <div class="card" onclick="window.open('https://portal.librus.pl/szkola','_blank')" style="cursor:pointer"><div class="card-title">Librus — e-dziennik</div><div class="card-text">Sprawdź oceny, frekwencję i wiadomości w systemie Librus.</div></div>
+      </div>
+      <div style="margin-top:3rem;background:var(--cream);padding:2.5rem" class="fi">
+        <div class="info-block-title">Zebrania z rodzicami 2025/2026</div>
+        ${[['Wrzesień 2025','Zebranie organizacyjne — omówienie planu roku szkolnego'],['Listopad 2025','Zebranie śródroczne — wyniki i frekwencja'],['Luty 2026','Zebranie po klasyfikacji śródrocznej'],['Kwiecień 2026','Zebranie informacyjne — matura i zakończenie roku']].map(([d,n])=>`<div style="display:flex;gap:2rem;padding:.75rem 0;border-bottom:1px solid var(--cream-dark)"><span style="font-size:.82rem;font-weight:600;color:var(--gold);min-width:120px">${d}</span><span style="font-size:.9rem;color:var(--text-mid)">${n}</span></div>`).join('')}
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── RADA RODZICÓW ────────────────────────────────────────────────────────────
+function renderRadaRodzicow(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Rada Rodziców','Rada<br><em>Rodziców</em>')}
+    ${breadcrumb([{label:'Rodzice',nav:'rodzice'},{label:'Rada Rodziców',nav:'rada-rodzicow'}])}
+    <div class="section-wrap">
+      <div class="two-col fi">
+        <div class="prose">
+          <p>Rada Rodziców działa na podstawie art. 83 i 84 Ustawy Prawo oświatowe jako organ społeczny szkoły. Reprezentuje ogół rodziców uczniów i wspiera szkołę w realizacji jej zadań.</p>
+          <h3>Zadania Rady Rodziców</h3>
+          <ul>
+            <li>Uchwalanie regulaminu swojej działalności</li>
+            <li>Opiniowanie programu wychowawczo-profilaktycznego</li>
+            <li>Opiniowanie szkolnego zestawu programów nauczania</li>
+            <li>Finansowe wspieranie działalności statutowej szkoły</li>
+          </ul>
+        </div>
+        <div>
+          <div style="background:var(--navy);padding:2.5rem">
+            <div style="font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem">Skład Rady 2025/2026</div>
+            ${[['Przewodnicząca','Ewa Kowalczyk'],['Zastępca','Marek Dąbrowski'],['Skarbnik','Anna Piotrowska'],['Sekretarz','Tomasz Wierzbicki']].map(([r,n])=>`<div style="display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.06)"><span style="color:rgba(255,255,255,.4);font-size:.85rem">${r}</span><span style="font-family:var(--serif);color:#fff">${n}</span></div>`).join('')}
+            <div style="margin-top:1.5rem;font-size:.82rem;color:rgba(255,255,255,.4)">Kontakt: rada.rodzicow@norwid.eu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── ABSOLWENCI ───────────────────────────────────────────────────────────────
+function renderAbsolwenci(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Absolwenci','Nasi<br><em>absolwenci</em>')}
+    ${breadcrumb([{label:'Absolwenci',nav:'absolwenci'}])}
+    <div class="section-wrap">
+      <div class="prose fi" style="max-width:800px;margin-bottom:3rem">
+        <p>Absolwenci LO im. Norwida rozsiani są po całej Polsce i świecie. Wielu z nich osiągnęło znaczące sukcesy zawodowe i naukowe. Zapraszamy do dołączenia do społeczności absolwentów i uczestnictwa w jubileuszach szkoły.</p>
+      </div>
+      <div class="three-col fi">
+        <div class="card" onclick="navigate('galeria-abs')" style="cursor:pointer"><div class="card-title">Galeria Absolwentów</div><div class="card-text">Fotografie i wspomnienia z lat szkolnych wielu pokoleń absolwentów.</div></div>
+        <div class="card" onclick="navigate('160-lecie')" style="cursor:pointer"><div class="card-title">160-lecie szkoły</div><div class="card-text">Obchody jubileuszu 160-lecia szkoły — galeria i kronika wydarzeń.</div></div>
+        <div class="card" onclick="navigate('150-lecie')" style="cursor:pointer"><div class="card-title">150-lecie szkoły</div><div class="card-text">Obchody jubileuszu 150-lecia szkoły — wspomnienia i fotografie.</div></div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── GALERIA ABSOLWENTÓW ──────────────────────────────────────────────────────
+function renderGaleriaAbs(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Galeria Absolwentów','Wspomnienia<br><em>absolwentów</em>')}
+    ${breadcrumb([{label:'Absolwenci',nav:'absolwenci'},{label:'Galeria Absolwentów',nav:'galeria-abs'}])}
+    <div class="section-wrap">
+      <div class="gallery-grid fi">
+        ${Array.from({length:8},(_,i)=>`<div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/abs${i}/600/400')">
+          <img src="https://picsum.photos/seed/abs${i}/400/400" alt="">
+        </div>`).join('')}
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+function renderLecie160(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('160-lecie szkoły','Jubileusz<br><em>160-lecia</em>')}
+    ${breadcrumb([{label:'Absolwenci',nav:'absolwenci'},{label:'160-lecie',nav:'160-lecie'}])}
+    <div class="section-wrap"><div class="prose fi"><p>W 2018 roku szkoła obchodziła jubileusz 160-lecia istnienia. Uroczystości zgromadziły absolwentów z kilku pokoleń, nauczycieli, władze samorządowe oraz przyjaciół szkoły. Podczas gali wręczono odznaczenia i wyróżnienia zasłużonym absolwentom.</p></div>
+    <div class="gallery-grid fi" style="margin-top:3rem">${Array.from({length:6},(_,i)=>`<div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/l160${i}/600/400')"><img src="https://picsum.photos/seed/l160${i}/400/400" alt=""></div>`).join('')}</div>
+    </div>${footer()}`;
+}
+
+function renderLecie150(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('150-lecie szkoły','Jubileusz<br><em>150-lecia</em>')}
+    ${breadcrumb([{label:'Absolwenci',nav:'absolwenci'},{label:'150-lecie',nav:'150-lecie'}])}
+    <div class="section-wrap"><div class="prose fi"><p>W 2008 roku szkoła świętowała wyjątkowy jubileusz 150-lecia. Był to czas refleksji nad historią szkoły i spotkania pokoleń absolwentów. Wydano okolicznościową monografię poświęconą historii placówki.</p></div>
+    <div class="gallery-grid fi" style="margin-top:3rem">${Array.from({length:6},(_,i)=>`<div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/l150${i}/600/400')"><img src="https://picsum.photos/seed/l150${i}/400/400" alt=""></div>`).join('')}</div>
+    </div>${footer()}`;
+}
+
+// ─── KONTAKT ──────────────────────────────────────────────────────────────────
+function renderKontakt(){
+  document.getElementById('app').innerHTML=`
+    ${pageHero('Kontakt','Skontaktuj<br><em>się z nami</em>')}
+    ${breadcrumb([{label:'Kontakt',nav:'kontakt'}])}
+    <div class="section-wrap">
+      <div class="contact-grid fi">
+        <div>
+          <div class="contact-item"><div class="contact-label">Adres</div><div class="contact-val">ul. 3 Maja 24<br>13-300 Nowe Miasto Lubawskie<br>woj. warmińsko-mazurskie</div></div>
+          <div class="contact-item"><div class="contact-label">Telefon</div><div class="contact-val">(56) 472-60-20<br>(56) 472-60-21</div></div>
+          <div class="contact-item"><div class="contact-label">E-mail</div><div class="contact-val">norwid@norwid.eu</div></div>
+          <div class="contact-item"><div class="contact-label">Godziny sekretariatu</div><div class="contact-val">Pn–Pt: 7:30 – 15:30</div></div>
+          <div class="ext-links">
+            <a class="ext-link" href="https://cke.gov.pl/" target="_blank">CKE</a>
+            <a class="ext-link" href="http://www.oke.lomza.pl/" target="_blank">OKE Łomża</a>
+            <a class="ext-link" href="https://www.e-bip.org.pl/norwid/" target="_blank">BIP</a>
+            <a class="ext-link" href="https://portal.librus.pl/szkola" target="_blank">Librus</a>
+            <a class="ext-link" href="https://www.facebook.com/profile.php?id=100074408945390" target="_blank">Facebook</a>
+          </div>
+        </div>
+        <div>
+          <div class="map-placeholder">📍 ul. 3 Maja 24, Nowe Miasto Lubawskie</div>
+          <div style="margin-top:2px;background:var(--cream);padding:2rem">
+            <div class="info-block-title">Napisz do nas</div>
+            <div style="margin-top:1rem;display:flex;flex-direction:column;gap:.75rem">
+              <input class="form-input" type="text" placeholder="Imię i nazwisko">
+              <input class="form-input" type="email" placeholder="Adres e-mail">
+              <textarea class="form-textarea" rows="4" placeholder="Treść wiadomości"></textarea>
+              <button class="btn-save" style="align-self:flex-start" onclick="showToast('Wiadomość wysłana!')">Wyślij wiadomość</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    ${footer()}`;
+}
+
+// ─── ADMIN ────────────────────────────────────────────────────────────────────
+function renderAdmin(){
+  if(!adminLoggedIn){renderAdminLogin();return}
+  const sections={posts:renderAdminPosts,gallery:renderAdminGallery,pages:renderAdminPages,settings:renderAdminSettings};
+  const sectionLabels={posts:'Aktualności',gallery:'Galeria',pages:'Strony',settings:'Ustawienia'};
+  const icons={
+    posts:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>',
+    gallery:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
+    pages:'<svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+    settings:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+  };
+  const posts=getPosts();
+  const gallery=getGallery();
+  const html=`<div class="admin-layout">
+    <div class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <div class="admin-sidebar-title">Panel NORWID</div>
+        <div class="admin-sidebar-sub">System zarządzania treścią</div>
+      </div>
+      <div style="margin-top:1rem">
+        <div class="admin-nav-section">Menu główne</div>
+        ${Object.keys(sections).map(k=>`<div class="admin-nav-item ${adminSection===k?'active':''}" onclick="setAdminSection('${k}')">${icons[k]}${sectionLabels[k]}</div>`).join('')}
+        <div class="admin-nav-section" style="margin-top:1.5rem">Szkoła</div>
+        <div class="admin-nav-item" onclick="navigate('home')"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Podgląd strony</div>
+        <div class="admin-nav-item" onclick="adminLogout()"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Wyloguj się</div>
+      </div>
+    </div>
+    <div class="admin-content" id="adminContent"></div>
+  </div>`;
+  document.getElementById('app').innerHTML=html;
+  (sections[adminSection]||renderAdminPosts)();
+}
+
+function setAdminSection(s){adminSection=s;renderAdmin()}
+
+function renderAdminPosts(){
+  const posts=getPosts();
+  document.getElementById('adminContent').innerHTML=`
+    <div class="admin-top">
+      <div class="admin-page-title">Aktualności</div>
+      <button class="btn-add" onclick="openPostModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Dodaj wpis</button>
+    </div>
+    <div class="admin-stats">
+      <div class="admin-stat"><div class="admin-stat-num">${posts.length}</div><div class="admin-stat-label">Wszystkich wpisów</div></div>
+      <div class="admin-stat"><div class="admin-stat-num">${posts.filter(p=>p.status==='published').length}</div><div class="admin-stat-label">Opublikowanych</div></div>
+      <div class="admin-stat"><div class="admin-stat-num">${posts.filter(p=>p.status==='draft').length}</div><div class="admin-stat-label">Szkiców</div></div>
+      <div class="admin-stat"><div class="admin-stat-num">${[...new Set(posts.map(p=>p.category))].length}</div><div class="admin-stat-label">Kategorii</div></div>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="admin-table">
+      <thead><tr><th style="width:52px">Zdjęcie</th><th>Tytuł</th><th>Kategoria</th><th>Data</th><th>Status</th><th>Akcje</th></tr></thead>
+      <tbody>
+        ${posts.map(p=>`<tr>
+          <td><img class="tbl-img" src="${p.img||'https://picsum.photos/seed/'+p.id+'/100/70'}" alt="" onerror="this.src='https://picsum.photos/seed/${p.id}/100/70'"></td>
+          <td style="font-weight:500;max-width:260px">${p.title}</td>
+          <td><span style="background:var(--cream-dark);padding:.2rem .6rem;font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase">${p.category||'—'}</span></td>
+          <td style="color:var(--text-light)">${formatDate(p.date)}</td>
+          <td><span class="badge ${p.status==='published'?'badge-pub':'badge-draft'}">${p.status==='published'?'Opublikowany':'Szkic'}</span></td>
+          <td><div class="tbl-actions"><button class="tbl-btn tbl-btn-edit" onclick="openPostModal(${p.id})">Edytuj</button><button class="tbl-btn tbl-btn-del" onclick="deletePost(${p.id})">Usuń</button></div></td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+function renderAdminGallery(){
+  const gallery=getGallery();
+  document.getElementById('adminContent').innerHTML=`
+    <div class="admin-top">
+      <div class="admin-page-title">Galeria</div>
+      <button class="btn-add" onclick="openGalleryModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Dodaj zdjęcia</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px">
+      ${gallery.map(g=>`<div style="position:relative;overflow:hidden;background:var(--cream-dark)">
+        <img src="${g.img}" alt="${g.title}" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block" onerror="this.src='https://picsum.photos/seed/g${g.id}/400/300'">
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(11,30,53,.85));padding:1rem .75rem">
+          <div style="font-family:var(--serif);font-size:.9rem;font-weight:600;color:#fff;line-height:1.2">${g.title}</div>
+          <div style="font-size:.68rem;color:var(--gold);margin-top:.2rem">${g.year}</div>
+        </div>
+        <button onclick="deleteGallery(${g.id})" style="position:absolute;top:.5rem;right:.5rem;background:rgba(220,38,38,.9);border:none;color:#fff;width:26px;height:26px;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center">✕</button>
+      </div>`).join('')}
+    </div>`;
+}
+
+function renderAdminPages(){
+  const pages=[
+    {name:'Strona główna',nav:'home',status:'Opublikowana'},
+    {name:'Aktualności',nav:'aktualnosci',status:'Opublikowana'},
+    {name:'O szkole',nav:'o-szkole',status:'Opublikowana'},
+    {name:'Patron',nav:'patron',status:'Opublikowana'},
+    {name:'Historia',nav:'historia',status:'Opublikowana'},
+    {name:'Kadra pedagogiczna',nav:'kadra',status:'Opublikowana'},
+    {name:'Oferta edukacyjna',nav:'oferta',status:'Opublikowana'},
+    {name:'Rekrutacja 2026/2027',nav:'rekrutacja',status:'Opublikowana'},
+    {name:'Kontakt',nav:'kontakt',status:'Opublikowana'},
+  ];
+  document.getElementById('adminContent').innerHTML=`
+    <div class="admin-top"><div class="admin-page-title">Podstrony</div></div>
+    <table class="admin-table">
+      <thead><tr><th>Nazwa podstrony</th><th>Status</th><th>Podgląd</th></tr></thead>
+      <tbody>
+        ${pages.map(p=>`<tr>
+          <td style="font-weight:500">${p.name}</td>
+          <td><span class="badge badge-pub">${p.status}</span></td>
+          <td><button class="tbl-btn tbl-btn-edit" onclick="navigate('${p.nav}')">Podgląd →</button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+function renderAdminSettings(){
+  document.getElementById('adminContent').innerHTML=`
+    <div class="admin-top"><div class="admin-page-title">Ustawienia</div></div>
+    <div style="max-width:560px">
+      <div style="background:var(--cream);padding:2rem;margin-bottom:2px">
+        <div style="font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:1.5rem">Dane szkoły</div>
+        <div class="form-group"><label class="form-label">Nazwa szkoły</label><input class="form-input" value="LO im. C.K. Norwida w Nowym Mieście Lubawskim"></div>
+        <div class="form-group"><label class="form-label">Adres</label><input class="form-input" value="ul. 3 Maja 24, 13-300 Nowe Miasto Lubawskie"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" value="(56) 472-60-20"></div>
+          <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" value="norwid@norwid.eu"></div>
+        </div>
+      </div>
+      <div style="background:var(--cream);padding:2rem;margin-bottom:2px">
+        <div style="font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:1.5rem">Zmiana hasła admina</div>
+        <div class="form-group"><label class="form-label">Nowe hasło</label><input class="form-input" type="password" placeholder="••••••••"></div>
+        <div class="form-group"><label class="form-label">Powtórz hasło</label><input class="form-input" type="password" placeholder="••••••••"></div>
+        <button class="btn-save" onclick="showToast('Ustawienia zapisane!')">Zapisz ustawienia</button>
+      </div>
+      <div style="background:var(--cream);padding:2rem">
+        <div style="font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:.5rem">Informacja o witrynie</div>
+        <p style="font-size:.85rem;color:var(--text-mid);margin-bottom:1rem">Dane są przechowywane lokalnie w przeglądarce.</p>
+        <button class="btn-cancel" onclick="if(confirm('Zresetować wszystkie dane do domyślnych?')){localStorage.removeItem('norwid_posts');localStorage.removeItem('norwid_gallery');showToast('Dane zresetowane!');renderAdminSettings()}">Resetuj dane</button>
+      </div>
+    </div>`;
+}
+
+function renderAdminLogin(){
+  document.getElementById('app').innerHTML=`
+    <div style="padding:0 2.5rem">
+    <div class="admin-login">
+      <div class="admin-login-logo">Panel NORWID</div>
+      <div class="admin-login-sub">System zarządzania treścią — zaloguj się aby kontynuować</div>
+      <div class="login-error" id="loginErr">Nieprawidłowe hasło. Spróbuj ponownie.</div>
+      <div class="form-group"><label class="form-label">Login</label><input class="form-input" id="loginUser" value="admin"></div>
+      <div class="form-group"><label class="form-label">Hasło</label><input class="form-input" type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn-save" style="width:100%;margin-top:.5rem" onclick="doLogin()">Zaloguj się</button>
+      <div style="margin-top:1.5rem;padding:1rem;background:rgba(196,151,58,.1);border:1px solid rgba(196,151,58,.3);font-size:.78rem;color:var(--text-mid)">
+        Dane testowe: login <strong>admin</strong>, hasło <strong>norwid2026</strong>
+      </div>
+    </div></div>
+    ${footer()}`;
+}
+
+function doLogin(){
+  const u=document.getElementById('loginUser').value;
+  const p=document.getElementById('loginPass').value;
+  if(u==='admin'&&p==='norwid2026'){
+    adminLoggedIn=true;
+    localStorage.setItem('norwid_admin','1');
+    navigate('admin');
+  } else {
+    document.getElementById('loginErr').style.display='block';
+  }
+}
+
+function adminLogout(){
+  adminLoggedIn=false;
+  localStorage.removeItem('norwid_admin');
+  navigate('home');
+}
+
+// ─── MODALS ───────────────────────────────────────────────────────────────────
+function openPostModal(id=null){
+  editingId=id;
+  const post=id?getPosts().find(p=>p.id===id):{title:'',date:new Date().toISOString().slice(0,10),status:'published',excerpt:'',img:'',category:'Aktualności'};
+  document.getElementById('modalTitle').textContent=id?'Edytuj wpis':'Dodaj wpis';
+  document.getElementById('modalBody').innerHTML=`
+    <div class="form-group"><label class="form-label">Tytuł</label><input class="form-input" id="f_title" value="${escHtml(post.title)}"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Data</label><input class="form-input" type="date" id="f_date" value="${post.date}"></div>
+      <div class="form-group"><label class="form-label">Kategoria</label>
+        <select class="form-select" id="f_cat">
+          ${['Aktualności','Projekty','Konkursy','Edukacja','Zdrowie','Kultura','Sport'].map(c=>`<option${post.category===c?' selected':''}>${c}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Treść / Streszczenie</label><textarea class="form-textarea" id="f_excerpt">${escHtml(post.excerpt)}</textarea></div>
+    <div class="form-group"><label class="form-label">URL zdjęcia (opcjonalnie)</label><input class="form-input" id="f_img" placeholder="https://..." value="${post.img||''}"></div>
+    <div class="form-group">
+      <label class="form-label">Lub wgraj zdjęcie</label>
+      <label class="upload-area"><input type="file" accept="image/*" style="display:none" onchange="previewUpload(this)"><div class="upload-area-text">Kliknij aby wybrać plik lub przeciągnij tutaj<br><strong>JPG, PNG, GIF do 5MB</strong></div></label>
+      <div class="upload-preview" id="uploadPreview"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Status</label>
+      <select class="form-select" id="f_status">
+        <option value="published"${post.status==='published'?' selected':''}>Opublikowany</option>
+        <option value="draft"${post.status==='draft'?' selected':''}>Szkic</option>
+      </select>
+    </div>`;
+  modalCallback='post';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function openGalleryModal(){
+  document.getElementById('modalTitle').textContent='Dodaj zdjęcia do galerii';
+  document.getElementById('modalBody').innerHTML=`
+    <div class="form-group"><label class="form-label">Tytuł albumu / zdjęcia</label><input class="form-input" id="f_gtitle" placeholder="np. Wycieczka do Warszawy"></div>
+    <div class="form-group"><label class="form-label">Rok</label><input class="form-input" id="f_gyear" value="${new Date().getFullYear()}"></div>
+    <div class="form-group"><label class="form-label">URL zdjęcia</label><input class="form-input" id="f_gimg" placeholder="https://..."></div>
+    <div class="form-group">
+      <label class="form-label">Lub wgraj plik</label>
+      <label class="upload-area"><input type="file" accept="image/*" style="display:none" onchange="previewGalleryUpload(this)"><div class="upload-area-text">Kliknij aby wybrać zdjęcie<br><strong>JPG, PNG do 5MB</strong></div></label>
+      <div id="galleryUpPreview" style="margin-top:.5rem"></div>
+    </div>`;
+  modalCallback='gallery';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function previewUpload(input){
+  if(!input.files.length)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    document.getElementById('f_img').value=e.target.result;
+    document.getElementById('uploadPreview').innerHTML=`<div class="upload-preview-item"><img src="${e.target.result}"></div>`;
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function previewGalleryUpload(input){
+  if(!input.files.length)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    document.getElementById('f_gimg').value=e.target.result;
+    document.getElementById('galleryUpPreview').innerHTML=`<img src="${e.target.result}" style="max-width:100%;max-height:180px;object-fit:contain">`;
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function saveModalForm(){
+  if(modalCallback==='post'){
+    const title=document.getElementById('f_title').value.trim();
+    if(!title){alert('Podaj tytuł wpisu');return}
+    const posts=getPosts();
+    const obj={
+      id:editingId||Date.now(),
+      title,
+      date:document.getElementById('f_date').value,
+      status:document.getElementById('f_status').value,
+      excerpt:document.getElementById('f_excerpt').value.trim(),
+      img:document.getElementById('f_img').value.trim(),
+      category:document.getElementById('f_cat').value,
+    };
+    if(editingId){const i=posts.findIndex(p=>p.id===editingId);posts[i]=obj;}else{posts.unshift(obj);}
+    savePosts(posts);
+    closeModal();
+    showToast(editingId?'Wpis zaktualizowany!':'Wpis dodany!');
+    renderAdminPosts();
+  } else if(modalCallback==='gallery'){
+    const title=document.getElementById('f_gtitle').value.trim();
+    const img=document.getElementById('f_gimg').value.trim();
+    if(!title){alert('Podaj tytuł');return}
+    const gallery=getGallery();
+    gallery.push({id:Date.now(),title,year:document.getElementById('f_gyear').value,img:img||`https://picsum.photos/seed/${Date.now()}/600/400`});
+    saveGallery(gallery);
+    closeModal();
+    showToast('Zdjęcie dodane do galerii!');
+    renderAdminGallery();
+  }
+}
+
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');editingId=null;modalCallback=null}
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
+
+function deletePost(id){
+  if(!confirm('Usunąć ten wpis?'))return;
+  savePosts(getPosts().filter(p=>p.id!==id));
+  showToast('Wpis usunięty');
+  renderAdminPosts();
+}
+
+function deleteGallery(id){
+  if(!confirm('Usunąć to zdjęcie?'))return;
+  saveGallery(getGallery().filter(g=>g.id!==id));
+  showToast('Zdjęcie usunięte');
+  renderAdminGallery();
+}
+
+// ─── LIGHTBOX ─────────────────────────────────────────────────────────────────
+function openLightbox(src){
+  document.getElementById('lightboxImg').src=src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open')}
+
+// ─── ACCORDION ────────────────────────────────────────────────────────────────
+function toggleAcc(head){head.parentElement.classList.toggle('open')}
+
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  setTimeout(()=>{t.style.display='none'},3000);
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────────────────
+function formatDate(d){
+  if(!d)return '';
+  const dt=new Date(d);
+  return dt.toLocaleDateString('pl-PL',{day:'numeric',month:'long',year:'numeric'});
+}
+function escHtml(s){
+  if(!s)return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+const initPage=window.location.hash.slice(1)||'home';
+navigate(initPage);
+</script>
 </body>
 </html>
-
-
-
-
-
-
